@@ -1,16 +1,15 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
-import { GridTileImage } from "components/grid/tile";
-import Footer from "components/layout/footer";
-import { Gallery } from "components/product/gallery";
-import { ProductProvider } from "components/product/product-context";
-import { ProductDescription } from "components/product/product-description";
-import { HIDDEN_PRODUCT_TAG } from "lib/constants";
-import { getProduct, getProductRecommendations } from "lib/shopify";
-import { Image } from "lib/shopify/types";
-import Link from "next/link";
-import { Suspense } from "react";
+import { GridTileImage } from 'components/grid/tile';
+import { Gallery } from 'components/product/gallery';
+import { ProductProvider } from 'components/product/product-context';
+import { ProductDescription } from 'components/product/product-description';
+import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
+import { getProduct, getProductRecommendations } from 'lib/shopify';
+import { Image } from 'lib/shopify/types';
+import Link from 'next/link';
+import { Suspense } from 'react';
 
 export async function generateMetadata(props: {
   params: Promise<{ handle: string }>;
@@ -49,25 +48,23 @@ export async function generateMetadata(props: {
   };
 }
 
-export default async function ProductPage(props: {
-  params: Promise<{ handle: string }>;
-}) {
+export default async function ProductPage(props: { params: Promise<{ handle: string }> }) {
   const params = await props.params;
   const product = await getProduct(params.handle);
 
   if (!product) return notFound();
 
   const productJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Product",
+    '@context': 'https://schema.org',
+    '@type': 'Product',
     name: product.title,
     description: product.description,
     image: product.featuredImage.url,
     offers: {
-      "@type": "AggregateOffer",
+      '@type': 'AggregateOffer',
       availability: product.availableForSale
-        ? "https://schema.org/InStock"
-        : "https://schema.org/OutOfStock",
+        ? 'https://schema.org/InStock'
+        : 'https://schema.org/OutOfStock',
       priceCurrency: product.priceRange.minVariantPrice.currencyCode,
       highPrice: product.priceRange.maxVariantPrice.amount,
       lowPrice: product.priceRange.minVariantPrice.amount,
@@ -107,7 +104,6 @@ export default async function ProductPage(props: {
         </div>
         <RelatedProducts id={product.id} />
       </div>
-      <Footer />
     </ProductProvider>
   );
 }

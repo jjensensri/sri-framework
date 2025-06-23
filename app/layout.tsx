@@ -1,12 +1,30 @@
-import { CartProvider } from "components/cart/cart-context";
-import { Navbar } from "components/layout/navbar";
-import { GeistSans } from "geist/font/sans";
-import { getCart } from "lib/shopify";
-import { ReactNode } from "react";
-import "./globals.css";
-import { baseUrl } from "lib/utils";
+import '@styles/globals.scss';
+import './globals.css'; // get rid of this after removing tailwind
+
+import { CartProvider } from 'components/cart/cart-context';
+import { Poppins, Source_Sans_3 } from 'next/font/google';
+import { getCart } from 'lib/shopify';
+import { ReactNode } from 'react';
+
+import { baseUrl } from 'lib/utils';
+import { Header } from '@components/layout/header';
+import { Footer } from '@components/layout/footer/index';
 
 const { SITE_NAME } = process.env;
+
+// Font
+const poppins = Poppins({
+  variable: '--font-poppins',
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+});
+const sourceSans3 = Source_Sans_3({
+  variable: '--font-source-sans',
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['400', '700'],
+});
 
 export const metadata = {
   metadataBase: new URL(baseUrl),
@@ -20,20 +38,17 @@ export const metadata = {
   },
 };
 
-export default async function RootLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
   // Don't await the fetch, pass the Promise to the context provider
   const cart = getCart();
 
   return (
-    <html lang="en" className={GeistSans.variable}>
-      <body className="bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
+    <html lang="en" className={`${poppins.variable} ${sourceSans3.variable}`}>
+      <body>
         <CartProvider cartPromise={cart}>
-          <Navbar />
+          <Header />
           <main>{children}</main>
+          <Footer />
         </CartProvider>
       </body>
     </html>

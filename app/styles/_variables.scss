@@ -1,0 +1,96 @@
+@use 'sass:map';
+
+// breakpoints & grid
+$container-padding-x: 3rem;
+
+$column-padding-x: 4rem;
+$column-padding-y: 0;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+);
+
+$container-max-widths: (
+  xs: 575px,
+  sm: 767px,
+  md: 991px,
+  lg: 1199px,
+  xl: 1399px,
+  xxl: 1400px,
+);
+
+// colors
+$blue: #112d53;
+$light-blue: #8fbdef;
+$linkedin-blue: #0072b1;
+$linkedin-blue-hover: darken($linkedin-blue, 10%);
+$red: #dd1a26;
+$red-on-blue-ada: lighten($red, 19);
+$red-hover-bg: #bc1620;
+$red-hover-outline: #b1151e;
+$black: #000;
+$almost-black: #0a0d15;
+$white: #fff;
+$almost-white: #fafafa;
+$vapor: #e7e7e7;
+$ada-grey: #767676;
+
+$colors: (
+  'blue': $blue,
+  'red': $red,
+);
+$focus-ring-color: $light-blue;
+
+// accordions
+$accordion-border-radius: 0;
+$accordion-border-color: $black;
+$accordion-button-padding-x: 0;
+$accordion-body-padding-x: 0;
+$accordion-button-active-bg: none;
+
+// box-shadows
+$box-shadow: 0 0.5rem 1rem rgba($black, 0.1);
+$box-shadow-sm: 0 0.125rem 0.25rem rgba($black, 0.075);
+$box-shadow-lg: 0 1rem 3rem rgba($black, 0.175);
+$box-shadow-inset: inset 0 1px 2px rgba($black, 0.075);
+
+// border radius
+$border-radius: 16px;
+$border-radius-sm: 8px;
+$border-radius-lg: 32px;
+
+// fonts
+$font-family-sans-serif: 'Source Sans 3', sans-serif;
+$headings-font-family: 'Poppins', sans-serif;
+$headings-font-weight: 700;
+$headings-line-height: 1.4;
+
+// buttons
+$btn-padding-x: 20px;
+$btn-padding-y: 16px;
+$btn-font-family: $headings-font-family;
+$btn-font-weight: 700;
+$btn-border-radius: $border-radius-sm * 1.5;
+$btn-close-opacity: 1;
+$btn-close-hover-opacity: 0.6;
+$btn-close-focus-shadow: none;
+
+// forms
+$input-border-radius: $border-radius;
+$input-border-radius-sm: $border-radius-sm;
+$input-border-radius-lg: $border-radius-lg;
+
+// header
+$header-height-sm: 64px;
+$header-height: 80px;
+
+// horizontal line
+$horizontalLineHeight: 100px;
+
+// toasts
+$toast-spacing: 24px;

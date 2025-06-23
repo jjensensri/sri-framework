@@ -1,12 +1,11 @@
-import { Carousel } from "components/carousel";
-import { ThreeItemGrid } from "components/grid/three-items";
-import Footer from "components/layout/footer";
+import { Carousel } from 'components/carousel';
+import { ThreeItemGrid } from 'components/grid/three-items';
 
 export const metadata = {
-  title: "Cart API Demo Storefront",
-  description: "Stone Rooster e-commerce framework",
+  title: 'Cart API Demo Storefront',
+  description: 'Stone Rooster e-commerce framework',
   openGraph: {
-    type: "website",
+    type: 'website',
   },
 };
 
@@ -15,7 +14,6 @@ export default function HomePage() {
     <>
       <ThreeItemGrid />
       <Carousel />
-      <Footer />
     </>
   );
 }

@@ -1,0 +1,92 @@
+@import 'variables';
+@import 'bootstrap/scss/bootstrap';
+
+body {
+  color: $black;
+  background: $white;
+  font-family: $font-family-sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  position: relative;
+}
+
+main {
+  margin-top: $header-height-sm;
+
+  @include media-breakpoint-up(md) {
+    margin-top: $header-height;
+  }
+}
+
+a {
+  color: $red;
+
+  &:hover {
+    opacity: 0.8;
+    color: $red-hover-bg;
+  }
+}
+
+.not-found-container {
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// buttons
+.btn {
+  text-transform: uppercase;
+  letter-spacing: 0.25px;
+}
+
+.linkedin-btn {
+  color: $white;
+  background-color: $linkedin-blue;
+  font-size: 14px;
+
+  &:hover {
+    color: $white;
+    background-color: rgba($linkedin-blue, 0.7);
+  }
+}
+
+// accordions
+.accordion-item {
+  border-left: none;
+  border-right: none;
+}
+
+.accordion-button {
+  font-size: calc(1.2rem + 0.1vw);
+  font-weight: 700;
+}
+
+// toasts
+.toast-container {
+  position: fixed;
+  padding: 20px;
+  bottom: 0;
+  right: 0;
+}
+.toast-body {
+  position: relative;
+  color: $white;
+  padding-right: 36px;
+
+  &.has-icon {
+    padding-left: 40px;
+  }
+  svg {
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    font-size: 24px;
+  }
+  .btn-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+  }
+}

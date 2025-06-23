@@ -11,11 +11,16 @@
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.7",
+    "eslint": "^9.29.0",
+    "eslint-config-next": "^15.3.4",
     "clsx": "^2.1.1",
-    "geist": "^1.4.2",
     "next": "15.3.4",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-bootstrap": "^2.10.10",
+    "react-dom": "19.1.0",
+    "sass": "^1.89.2"
   },
   "devDependencies": {
     "@tailwindcss/container-queries": "^0.1.1",

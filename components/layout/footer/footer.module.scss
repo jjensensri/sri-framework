@@ -1,0 +1,51 @@
+@import '@styles/variables';
+@import 'bootstrap/scss/mixins/breakpoints';
+
+.footer {
+  background-color: $almost-white;
+  text-align: center;
+  padding-top: 32px;
+  border-top: 1px solid $vapor;
+
+  @include media-breakpoint-up(md) {
+    text-align: left;
+  }
+
+  :global(.row) {
+    gap: 32px;
+
+    @include media-breakpoint-up(md) {
+      :global(.col-12) {
+        flex: 1;
+      }
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin: 8px 0;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    a {
+      color: $black;
+      text-decoration: none;
+
+      &:hover {
+        opacity: 0.8;
+        text-decoration: underline;
+      }
+    }
+  }
+  .copyright {
+    font-size: 14px;
+    text-align: center;
+    margin: 32px auto;
+  }
+}
