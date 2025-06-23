@@ -1,8 +1,8 @@
 'use client';
 
 import clsx from 'clsx';
-import { useProduct, useUpdateURL } from 'components/product/product-context';
-import { ProductOption, ProductVariant } from 'lib/shopify/types';
+import { useProduct, useUpdateURL } from '@components/product/product-context';
+import { ProductOption, ProductVariant } from '@lib/shopify/types';
 
 type Combination = {
   id: string;
@@ -12,7 +12,7 @@ type Combination = {
 
 export function VariantSelector({
   options,
-  variants
+  variants,
 }: {
   options: ProductOption[];
   variants: ProductVariant[];
@@ -32,7 +32,7 @@ export function VariantSelector({
     ...variant.selectedOptions.reduce(
       (accumulator, option) => ({ ...accumulator, [option.name.toLowerCase()]: option.value }),
       {}
-    )
+    ),
   }));
 
   return options.map((option) => (
@@ -78,7 +78,7 @@ export function VariantSelector({
                     'ring-1 ring-transparent transition duration-300 ease-in-out hover:ring-blue-600':
                       !isActive && isAvailableForSale,
                     'relative z-10 cursor-not-allowed overflow-hidden bg-neutral-100 text-neutral-500 ring-1 ring-neutral-300 before:absolute before:inset-x-0 before:-z-10 before:h-px before:-rotate-45 before:bg-neutral-300 before:transition-transform dark:bg-neutral-900 dark:text-neutral-400 dark:ring-neutral-700 dark:before:bg-neutral-700':
-                      !isAvailableForSale
+                      !isAvailableForSale,
                   }
                 )}
               >

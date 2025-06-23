@@ -10,6 +10,7 @@
   :global(.container) {
     flex-wrap: nowrap;
   }
+
   :global(.navbar) {
     padding: 8px 0;
 
@@ -17,19 +18,24 @@
       padding: 16px 0;
     }
   }
+
   .logo-container {
     display: flex;
   }
+
   :global(.navbar-brand) {
     margin: 0;
   }
+
   :global(.navbar-collapse) {
     background: rgba($white, 0.98);
   }
+
   :global(.navbar-nav) {
     justify-content: flex-end;
     margin-left: 16px;
   }
+
   :global(.nav-link) {
     color: $black;
     padding: 12px var(--bs-gutter-x);
@@ -45,6 +51,7 @@
       }
     }
   }
+
   :global(.navbar-toggler) {
     border: none;
     border-radius: $border-radius-sm;
@@ -54,6 +61,7 @@
     &:focus {
       box-shadow: none;
     }
+
     &:global(.collapsed) {
       padding: 8px 12px;
 
@@ -63,6 +71,7 @@
         height: 2rem;
       }
     }
+
     :global(.navbar-toggler-icon) {
       --bs-navbar-toggler-icon-bg: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/></svg>');
       width: 1.5rem;
@@ -79,6 +88,7 @@
   :global(.input-group) {
     position: relative;
   }
+
   :global(.form-control) {
     border-radius: $input-border-radius-lg !important;
     padding: 12px 20px;
@@ -103,6 +113,7 @@
     background: $almost-white;
     color: $black;
   }
+
   svg {
     width: 20px;
     height: 20px;

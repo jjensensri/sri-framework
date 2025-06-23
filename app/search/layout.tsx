@@ -1,25 +1,28 @@
-import Collections from 'components/layout/search/collections';
-import FilterList from 'components/layout/search/filter';
-import { sorting } from 'lib/constants';
+import Collections from '@components/layout/search/collections';
+import FilterList from '@components/layout/search/filter';
+import { sorting } from '@lib/constants';
 import ChildrenWrapper from './children-wrapper';
-import { Suspense } from 'react';
+import React, { Suspense } from 'react';
+import Loading from '@app/search/loading';
+import { Col, Container, Row } from 'react-bootstrap';
+import styles from './search.module.scss';
 
 export default function SearchLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <div className="mx-auto flex max-w-(--breakpoint-2xl) flex-col gap-8 px-4 pb-4 text-black md:flex-row dark:text-white">
-        <div className="order-first w-full flex-none md:max-w-[125px]">
-          <Collections />
-        </div>
-        <div className="order-last min-h-screen w-full md:order-none">
-          <Suspense fallback={null}>
-            <ChildrenWrapper>{children}</ChildrenWrapper>
-          </Suspense>
-        </div>
-        <div className="order-none flex-none md:order-last md:w-[125px]">
-          <FilterList list={sorting} title="Sort by" />
-        </div>
-      </div>
-    </>
+    <section className={styles.search}>
+      <Container>
+        <Row>
+          <Col xs={12} md={4} lg={3}>
+            <Collections />
+            <FilterList list={sorting} title="Sort by" />
+          </Col>
+          <Col xs={12} md={8} lg={9}>
+            <Suspense fallback={<Loading />}>
+              <ChildrenWrapper>{children}</ChildrenWrapper>
+            </Suspense>
+          </Col>
+        </Row>
+      </Container>
+    </section>
   );
 }

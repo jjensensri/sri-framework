@@ -1,4 +1,4 @@
-import seoFragment from '../fragments/seo';
+import seoFragment from '@lib/shopify/fragments/seo';
 
 const pageFragment = /* GraphQL */ `
   fragment page on Page {

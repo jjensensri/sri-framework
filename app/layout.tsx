@@ -1,12 +1,12 @@
 import '@styles/globals.scss';
 import './globals.css'; // get rid of this after removing tailwind
 
-import { CartProvider } from 'components/cart/cart-context';
+import { CartProvider } from '@components/cart/cart-context';
 import { Poppins, Source_Sans_3 } from 'next/font/google';
-import { getCart } from 'lib/shopify';
+import { getCart } from '@lib/shopify';
 import { ReactNode } from 'react';
 
-import { baseUrl } from 'lib/utils';
+import { baseUrl } from '@lib/utils';
 import { Header } from '@components/layout/header';
 import { Footer } from '@components/layout/footer/index';
 

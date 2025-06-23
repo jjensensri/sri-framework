@@ -1,0 +1,11 @@
+@import '@styles/variables';
+@import 'bootstrap/scss/mixins/breakpoints';
+
+.search {
+  ul {
+    padding-left: 0;
+  }
+  :global(.product-grid) {
+    margin-top: 0;
+  }
+}

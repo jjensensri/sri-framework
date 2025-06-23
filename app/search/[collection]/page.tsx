@@ -1,10 +1,9 @@
-import { getCollection, getCollectionProducts } from "lib/shopify";
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { getCollection, getCollectionProducts } from '@lib/shopify';
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
-import Grid from "components/grid";
-import ProductGridItems from "components/layout/product-grid-items";
-import { defaultSort, sorting } from "lib/constants";
+import { ProductGrid } from '@components/layout/product-grid';
+import { defaultSort, sorting } from '@lib/constants';
 
 export async function generateMetadata(props: {
   params: Promise<{ collection: string }>;
@@ -17,9 +16,7 @@ export async function generateMetadata(props: {
   return {
     title: collection.seo?.title || collection.title,
     description:
-      collection.seo?.description ||
-      collection.description ||
-      `${collection.title} products`,
+      collection.seo?.description || collection.description || `${collection.title} products`,
   };
 }
 
@@ -30,8 +27,7 @@ export default async function CategoryPage(props: {
   const searchParams = await props.searchParams;
   const params = await props.params;
   const { sort } = searchParams as { [key: string]: string };
-  const { sortKey, reverse } =
-    sorting.find((item) => item.slug === sort) || defaultSort;
+  const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
   const products = await getCollectionProducts({
     collection: params.collection,
     sortKey,
@@ -43,9 +39,7 @@ export default async function CategoryPage(props: {
       {products.length === 0 ? (
         <p className="py-3 text-lg">{`No products found in this collection`}</p>
       ) : (
-        <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          <ProductGridItems products={products} />
-        </Grid>
+        <ProductGrid products={products} />
       )}
     </section>
   );

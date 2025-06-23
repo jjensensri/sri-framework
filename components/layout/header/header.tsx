@@ -12,10 +12,10 @@ import {
   OffcanvasHeader,
   OffcanvasTitle,
 } from 'react-bootstrap';
-import CartModal from 'components/cart/modal';
-import { getMenu } from 'lib/shopify';
-import { Menu } from 'lib/shopify/types';
-import LogoIcon from '../../icons/logo';
+import CartModal from '@components/cart/modal';
+import { getMenu } from '@lib/shopify';
+import { Menu } from '@lib/shopify/types';
+import LogoIcon from '@components/icons/logo';
 import Search from './search';
 
 const { SITE_NAME } = process.env;

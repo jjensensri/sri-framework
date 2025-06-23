@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 export default function OpenCart({
   className,
-  quantity
+  quantity,
 }: {
   className?: string;
   quantity?: number;

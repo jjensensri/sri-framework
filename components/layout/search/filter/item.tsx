@@ -1,8 +1,8 @@
 'use client';
 
 import clsx from 'clsx';
-import type { SortFilterItem } from 'lib/constants';
-import { createUrl } from 'lib/utils';
+import type { SortFilterItem } from '@lib/constants';
+import { createUrl } from '@lib/utils';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import type { ListItem, PathFilterItem } from '.';
@@ -23,7 +23,7 @@ function PathFilterItem({ item }: { item: PathFilterItem }) {
         className={clsx(
           'w-full text-sm underline-offset-4 hover:underline dark:hover:text-neutral-100',
           {
-            'underline underline-offset-4': active
+            'underline underline-offset-4': active,
           }
         )}
       >
@@ -42,7 +42,7 @@ function SortFilterItem({ item }: { item: SortFilterItem }) {
     pathname,
     new URLSearchParams({
       ...(q && { q }),
-      ...(item.slug && item.slug.length && { sort: item.slug })
+      ...(item.slug && item.slug.length && { sort: item.slug }),
     })
   );
   const DynamicTag = active ? 'p' : Link;
@@ -53,7 +53,7 @@ function SortFilterItem({ item }: { item: SortFilterItem }) {
         prefetch={!active ? false : undefined}
         href={href}
         className={clsx('w-full hover:underline hover:underline-offset-4', {
-          'underline underline-offset-4': active
+          'underline underline-offset-4': active,
         })}
       >
         {item.title}

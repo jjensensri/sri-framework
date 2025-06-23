@@ -1,7 +1,7 @@
 export default {
   experimental: {
     // ppr: true,
-    inlineCss: true,
+    // inlineCss: true,
     useCache: true,
     // optimizePackageImports: true, // todo: if we use mantine uis
   },

@@ -1,0 +1,28 @@
+@import '@styles/variables';
+@import 'bootstrap/scss/mixins/breakpoints';
+
+.product-carousel {
+  width: 100vw;
+  overflow: scroll;
+  margin-top: 48px;
+  margin-bottom: 48px;
+
+  @include media-breakpoint-up(md) {
+    margin-top: 64px;
+    margin-bottom: 64px;
+  }
+}
+
+.product-carousel-wrapper {
+  display: inline-flex;
+  gap: 24px;
+  padding: 0 24px;
+}
+
+.product-carousel-item {
+  width: 250px;
+
+  @include media-breakpoint-up(md) {
+    width: 300px;
+  }
+}

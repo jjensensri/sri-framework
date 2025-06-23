@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import clsx from "clsx";
-import { Dialog, Transition } from "@headlessui/react";
-import { ShoppingCartIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import Price from "components/price";
-import { DEFAULT_OPTION } from "lib/constants";
-import { createUrl } from "lib/utils";
-import Image from "next/image";
-import Link from "next/link";
-import { Fragment, useEffect, useRef, useState } from "react";
-import { useFormStatus } from "react-dom";
-import { createCartAndSetCookie, redirectToCheckout } from "./actions";
-import { useCart } from "./cart-context";
-import { DeleteItemButton } from "./delete-item-button";
-import { EditItemQuantityButton } from "./edit-item-quantity-button";
-import OpenCart from "./open-cart";
+import clsx from 'clsx';
+import { Dialog, Transition } from '@headlessui/react';
+import { ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import Price from '@components/price';
+import { DEFAULT_OPTION } from '@lib/constants';
+import { createUrl } from '@lib/utils';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Fragment, useEffect, useRef, useState } from 'react';
+import { useFormStatus } from 'react-dom';
+import { createCartAndSetCookie, redirectToCheckout } from './actions';
+import { useCart } from './cart-context';
+import { DeleteItemButton } from './delete-item-button';
+import { EditItemQuantityButton } from './edit-item-quantity-button';
+import OpenCart from './open-cart';
 
 type MerchandiseSearchParams = {
   [key: string]: string;
@@ -84,35 +84,27 @@ export default function CartModal() {
               {!cart || cart.lines.length === 0 ? (
                 <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
                   <ShoppingCartIcon className="h-16" />
-                  <p className="mt-6 text-center text-2xl font-bold">
-                    Your cart is empty.
-                  </p>
+                  <p className="mt-6 text-center text-2xl font-bold">Your cart is empty.</p>
                 </div>
               ) : (
                 <div className="flex h-full flex-col justify-between overflow-visible">
                   <ul className="grow py-4">
                     {cart.lines
                       .sort((a, b) =>
-                        a.merchandise.product.title.localeCompare(
-                          b.merchandise.product.title,
-                        ),
+                        a.merchandise.product.title.localeCompare(b.merchandise.product.title)
                       )
                       .map((item, i) => {
-                        const merchandiseSearchParams =
-                          {} as MerchandiseSearchParams;
+                        const merchandiseSearchParams = {} as MerchandiseSearchParams;
 
-                        item.merchandise.selectedOptions.forEach(
-                          ({ name, value }) => {
-                            if (value !== DEFAULT_OPTION) {
-                              merchandiseSearchParams[name.toLowerCase()] =
-                                value;
-                            }
-                          },
-                        );
+                        item.merchandise.selectedOptions.forEach(({ name, value }) => {
+                          if (value !== DEFAULT_OPTION) {
+                            merchandiseSearchParams[name.toLowerCase()] = value;
+                          }
+                        });
 
                         const merchandiseUrl = createUrl(
                           `/product/${item.merchandise.product.handle}`,
-                          new URLSearchParams(merchandiseSearchParams),
+                          new URLSearchParams(merchandiseSearchParams)
                         );
 
                         return (
@@ -131,13 +123,10 @@ export default function CartModal() {
                                     width={64}
                                     height={64}
                                     alt={
-                                      item.merchandise.product.featuredImage
-                                        .altText ||
+                                      item.merchandise.product.featuredImage.altText ||
                                       item.merchandise.product.title
                                     }
-                                    src={
-                                      item.merchandise.product.featuredImage.url
-                                    }
+                                    src={item.merchandise.product.featuredImage.url}
                                   />
                                 </div>
                                 <Link
@@ -149,8 +138,7 @@ export default function CartModal() {
                                     <span className="leading-tight">
                                       {item.merchandise.product.title}
                                     </span>
-                                    {item.merchandise.title !==
-                                    DEFAULT_OPTION ? (
+                                    {item.merchandise.title !== DEFAULT_OPTION ? (
                                       <p className="text-sm text-neutral-500 dark:text-neutral-400">
                                         {item.merchandise.title}
                                       </p>
@@ -162,24 +150,14 @@ export default function CartModal() {
                                 <Price
                                   className="flex justify-end space-y-2 text-right text-sm"
                                   amount={item.cost.totalAmount.amount}
-                                  currencyCode={
-                                    item.cost.totalAmount.currencyCode
-                                  }
+                                  currencyCode={item.cost.totalAmount.currencyCode}
                                 />
                                 <div className="ml-auto flex h-9 flex-row items-center rounded-full border border-neutral-200 dark:border-neutral-700">
-                                  <EditItemQuantityButton
-                                    item={item}
-                                    type="minus"
-                                  />
+                                  <EditItemQuantityButton item={item} type="minus" />
                                   <p className="w-6 text-center">
-                                    <span className="w-full text-sm">
-                                      {item.quantity}
-                                    </span>
+                                    <span className="w-full text-sm">{item.quantity}</span>
                                   </p>
-                                  <EditItemQuantityButton
-                                    item={item}
-                                    type="plus"
-                                  />
+                                  <EditItemQuantityButton item={item} type="plus" />
                                 </div>
                               </div>
                             </div>
@@ -225,12 +203,7 @@ export default function CartModal() {
 function CloseCart({ className }: { className?: string }) {
   return (
     <div className="relative flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:text-white">
-      <XMarkIcon
-        className={clsx(
-          "h-6 transition-all ease-in-out hover:scale-110",
-          className,
-        )}
-      />
+      <XMarkIcon className={clsx('h-6 transition-all ease-in-out hover:scale-110', className)} />
     </div>
   );
 }
@@ -243,7 +216,7 @@ function CheckoutButton() {
       href="/cart"
       className="block w-full rounded-full bg-blue-600 p-3 text-center text-sm font-medium text-white opacity-90 hover:opacity-100"
     >
-      {"Cart"}
+      {'Cart'}
     </a>
   );
 }

@@ -1,0 +1,32 @@
+@import '@styles/variables';
+@import 'bootstrap/scss/mixins/breakpoints';
+
+.product-tile {
+  display: block;
+  text-decoration: none;
+  color: $black;
+  margin-bottom: 24px !important;
+
+  :global(.card-title) {
+    margin-bottom: 4px;
+
+    p {
+      margin: 0;
+    }
+  }
+  :global(.card-body) {
+    margin-bottom: 4px;
+  }
+}
+
+.product-image {
+  aspect-ratio: 4/3 !important;
+
+  img {
+    width: 100%;
+    height: auto !important;
+    aspect-ratio: 4/3;
+    border-top-left-radius: var(--bs-card-inner-border-radius);
+    border-top-right-radius: var(--bs-card-inner-border-radius);
+  }
+}

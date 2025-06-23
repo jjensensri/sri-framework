@@ -1,9 +1,11 @@
 'use client';
 
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
-import { GridTileImage } from 'components/grid/tile';
-import { useProduct, useUpdateURL } from 'components/product/product-context';
+import { ProductTile } from '@components/layout/product-tile';
+import { useProduct, useUpdateURL } from '@components/product/product-context';
 import Image from 'next/image';
+import { clsx } from 'clsx';
+import { is } from 'immutable';
 
 export function Gallery({ images }: { images: { src: string; altText: string }[] }) {
   const { state, updateImage } = useProduct();
@@ -74,13 +76,23 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
                   aria-label="Select product image"
                   className="h-full w-full"
                 >
-                  <GridTileImage
-                    alt={image.altText}
-                    src={image.src}
-                    width={80}
-                    height={80}
-                    active={isActive}
-                  />
+                  <div
+                    className={clsx(
+                      'group flex h-full w-full items-center justify-center overflow-hidden rounded-lg border bg-white hover:border-blue-600 dark:bg-black',
+                      {
+                        'border-2 border-blue-600': isActive,
+                        'border-neutral-200 dark:border-neutral-800': !isActive,
+                      }
+                    )}
+                  >
+                    <Image
+                      className={clsx('relative h-full w-full object-contain')}
+                      alt={image.altText}
+                      src={image.src}
+                      width={80}
+                      height={80}
+                    />
+                  </div>
                 </button>
               </li>
             );
