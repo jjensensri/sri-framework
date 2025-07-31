@@ -3,7 +3,8 @@ import './globals.css'; // get rid of this after removing tailwind
 
 import { CartProvider } from '@components/cart/cart-context';
 import { Poppins, Source_Sans_3 } from 'next/font/google';
-import { getCart } from '@lib/shopify';
+// import { getCart } from '@lib/shopify';
+import { getCart } from '@lib/cart-api';
 import { ReactNode } from 'react';
 
 import { baseUrl } from '@lib/utils';

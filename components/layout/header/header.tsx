@@ -17,11 +17,17 @@ import { getMenu } from '@lib/shopify';
 import { Menu } from '@lib/shopify/types';
 import LogoIcon from '@components/icons/logo';
 import Search from './search';
+import { headers } from 'next/headers';
 
 const { SITE_NAME } = process.env;
 
 export const Header = async () => {
   const menu = await getMenu('next-js-frontend-header-menu');
+
+  const headerList = await headers();
+  const pathname = headerList.get('x-current-path') || '';
+
+  console.log('pathname: ', pathname);
 
   return (
     <header className={styles.header}>

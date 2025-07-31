@@ -28,6 +28,7 @@ export default function CartModal() {
   const closeCart = () => setIsOpen(false);
 
   useEffect(() => {
+    console.log('usecart: ', cart);
     if (!cart) {
       createCartAndSetCookie();
     }
@@ -81,7 +82,7 @@ export default function CartModal() {
                 </button>
               </div>
 
-              {!cart || cart.lines.length === 0 ? (
+              {!cart || cart?.lines?.length === 0 ? (
                 <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
                   <ShoppingCartIcon className="h-16" />
                   <p className="mt-6 text-center text-2xl font-bold">Your cart is empty.</p>
@@ -89,8 +90,8 @@ export default function CartModal() {
               ) : (
                 <div className="flex h-full flex-col justify-between overflow-visible">
                   <ul className="grow py-4">
-                    {cart.lines
-                      .sort((a, b) =>
+                    {cart?.lines
+                      ?.sort((a, b) =>
                         a.merchandise.product.title.localeCompare(b.merchandise.product.title)
                       )
                       .map((item, i) => {
@@ -170,8 +171,8 @@ export default function CartModal() {
                       <p>Taxes</p>
                       <Price
                         className="text-right text-base text-black dark:text-white"
-                        amount={cart.cost.totalTaxAmount.amount}
-                        currencyCode={cart.cost.totalTaxAmount.currencyCode}
+                        amount={cart.pricingSummary.totalTax.toString()}
+                        currencyCode={cart.currency}
                       />
                     </div>
                     <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1 dark:border-neutral-700">
@@ -182,8 +183,8 @@ export default function CartModal() {
                       <p>Total</p>
                       <Price
                         className="text-right text-base text-black dark:text-white"
-                        amount={cart.cost.totalAmount.amount}
-                        currencyCode={cart.cost.totalAmount.currencyCode}
+                        amount={cart.pricingSummary.subtotal}
+                        currencyCode={cart.currency}
                       />
                     </div>
                   </div>

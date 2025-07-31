@@ -2,6 +2,7 @@ import { ProductCarousel } from '@components/layout/product-carousel';
 import { ProductGrid } from '@components/layout/product-grid';
 import { getCollectionProducts } from '@lib/shopify';
 import { Col, Container, Row } from 'react-bootstrap';
+import { getCart } from '@lib/cart-api';
 
 export const metadata = {
   title: 'Cart API Demo Storefront',
@@ -18,6 +19,9 @@ const HomePage = async () => {
   const carouselProducts = await getCollectionProducts({
     collection: 'hidden-homepage-carousel',
   });
+
+  const cart = await getCart();
+  console.log('cart api cart: ', cart);
 
   return (
     <>

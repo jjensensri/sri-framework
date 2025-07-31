@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 
 import { DEFAULT_OPTION } from '@lib/constants';
-import { getCart } from '@lib/shopify';
+import { getCart } from '@lib/cart-api';
 import Link from 'next/link';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { createUrl } from '@lib/utils';
@@ -26,7 +26,7 @@ export default async function CartPage(props: { params: Promise<{ handle: string
           <p className="text-lg font-semibold">My Cart</p>
         </div>
 
-        {!cart || cart.lines.length === 0 ? (
+        {!cart || cart?.lines?.length === 0 ? (
           <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
             <ShoppingCartIcon className="h-16" />
             <p className="mt-6 text-center text-2xl font-bold">Your cart is empty.</p>
@@ -34,8 +34,8 @@ export default async function CartPage(props: { params: Promise<{ handle: string
         ) : (
           <div className="flex h-full w-full flex-col justify-between overflow-hidden p-1 items-end ">
             <ul className="w-full grow overflow-auto p-5 bg-white rounded-xl border-1">
-              {cart.lines
-                .sort((a, b) =>
+              {cart?.lines
+                ?.sort((a, b) =>
                   a.merchandise.product.title.localeCompare(b.merchandise.product.title)
                 )
                 .map((item, i) => {
@@ -60,7 +60,7 @@ export default async function CartPage(props: { params: Promise<{ handle: string
                       className={`flex w-full flex-col  border-neutral-300 dark:border-neutral-700 ${i !== 0 && 'border-t'}`}
                     >
                       <div
-                        className={`relative flex w-full flex-row justify-between px-1 py-5 ${i === cart.lines.length - 1 && 'pb-0'} ${i === 0 && 'pt-0'}`}
+                        className={`relative flex w-full flex-row justify-between px-1 py-5 ${i === cart?.lines?.length - 1 && 'pb-0'} ${i === 0 && 'pt-0'}`}
                       >
                         <div className="flex flex-row">
                           <div className="relative h-28 w-28 overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800">
@@ -95,7 +95,7 @@ export default async function CartPage(props: { params: Promise<{ handle: string
                           <Price
                             className="flex justify-end space-y-2 text-right text-md mb-2 font-bold"
                             amount={item.cost.totalAmount.amount}
-                            currencyCode={item.cost.totalAmount.currencyCode}
+                            currencyCode={cart.currency}
                           />
                           <div className="ml-auto my-2 flex h-9 flex-row items-center rounded-full border border-neutral-200 dark:border-neutral-700">
                             <EditItemQuantityButton item={item} type="minus" />
@@ -118,8 +118,8 @@ export default async function CartPage(props: { params: Promise<{ handle: string
                 <p>Taxes</p>
                 <Price
                   className="text-right text-base text-black dark:text-white"
-                  amount={cart.cost.totalTaxAmount.amount}
-                  currencyCode={cart.cost.totalTaxAmount.currencyCode}
+                  amount={cart.pricingSummary.totalTax.toString()}
+                  currencyCode={cart.currency}
                 />
               </div>
               <div className="mb-3 flex items-center justify-between  border-neutral-200 pb-1 pt-1 dark:border-neutral-700">
@@ -130,8 +130,8 @@ export default async function CartPage(props: { params: Promise<{ handle: string
                 <p>Total</p>
                 <Price
                   className="text-right text-base text-black dark:text-white"
-                  amount={cart.cost.totalAmount.amount}
-                  currencyCode={cart.cost.totalAmount.currencyCode}
+                  amount={cart.pricingSummary.subtotal}
+                  currencyCode={cart.currency}
                 />
               </div>
             </div>
