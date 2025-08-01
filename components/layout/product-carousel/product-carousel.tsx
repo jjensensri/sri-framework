@@ -1,7 +1,6 @@
+import styles from '@components/layout/product-carousel/product-carousel.module.scss';
 import { ProductTile } from '@components/layout/product-tile';
 import type { Product } from '@lib/shopify/types';
-import styles from '@components/layout/product-carousel/product-carousel.module.scss';
-import { Carousel, CarouselItem, Col, Container, Row } from 'react-bootstrap';
 
 export const ProductCarousel = async ({
   perSlide,
@@ -25,7 +24,7 @@ export const ProductCarousel = async ({
     ${perSlide?.xs ? 100 / perSlide?.xs : '100'}vw
   `;
 
-  console.log('carouselProducts', carouselProducts);
+  // console.log('carouselProducts', carouselProducts);
 
   return (
     <section className={styles['product-carousel']}>

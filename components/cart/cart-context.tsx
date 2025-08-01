@@ -1,5 +1,6 @@
 'use client';
 
+// TODO: Update to use the cart-api lib for these types
 import type { Cart, CartItem, Product, ProductVariant } from '@lib/shopify/types';
 import React, { createContext, use, useContext, useMemo, useOptimistic } from 'react';
 

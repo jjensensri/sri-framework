@@ -1,5 +1,5 @@
-import { AccessToken, Cart } from './types';
 import { cookies } from 'next/headers';
+import { AccessToken, Cart } from './types';
 
 const apiHost = process.env.API_HOST;
 const orgId = process.env.ORG_ID;
@@ -62,8 +62,7 @@ export async function cartApiFetch<T>({
 
 export async function fetchAccessToken(): Promise<string> {
   const auth = btoa(`${clientId}:${clientSecret}`);
-
-  const res = await fetch(`${apiHost}/orgs/${orgId}/channels/${channelKey}/api-clients/token`, {
+  const res = await fetch(`${apiHost}/admin/orgs/${orgId}/channels/${channelKey}/api-clients/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -72,23 +71,41 @@ export async function fetchAccessToken(): Promise<string> {
     body: JSON.stringify({ scopes: ['cart:read', 'cart:write'] }),
   });
 
-  const body = await res.json();
+  const text = await res.text();
+
+  if (!res.ok) {
+    console.error(`Token request failed [${res.status}]:`, text);
+    throw new Error(`Token fetch error: ${text}`);
+  }
+
+  let body;
+  try {
+    body = JSON.parse(text);
+  } catch (e) {
+    console.error('Failed to parse response as JSON:', text);
+    throw new Error(`Invalid JSON: ${text}`);
+  }
+
   const token = (body as AccessToken).access_token || '';
   accessToken = token;
 
   return token;
 }
 
-export async function getCart(): Promise<Cart | undefined> {
-  const cartId = (await cookies()).get('cart-id')?.value;
 
+export async function getCart(): Promise<Cart | undefined> {
+  console.log("=====================================")
+  console.log("=====================================")
+  const cartId = (await cookies()).get('cart-id')?.value;
+  console.log(`cartId: `, cartId)
   if (!cartId) {
+    console.log("CartID is undefined")
     return undefined;
   }
 
   const res = await cartApiFetch({
     method: 'GET',
-    endpoint: `/${channelKey}/carts/${cartId}`,
+    endpoint: `/admin/carts/${channelKey}/carts/${cartId}`,
   });
 
   // Old carts becomes `null` when you checkout.
@@ -100,8 +117,12 @@ export async function getCart(): Promise<Cart | undefined> {
 }
 
 export async function createCart(): Promise<Cart> {
+  console.log("CREATING THE CART")
+  console.log("CREATING THE CART")
+  console.log("CREATING THE CART")
+  console.log(`channelKey: ${channelKey}`)
   const res = await cartApiFetch({
-    endpoint: '/ch18199/carts',
+    endpoint: `/admin/carts/${channelKey}/carts`,
     method: 'POST',
     payload: {
       origin: 'C',
@@ -113,6 +134,57 @@ export async function createCart(): Promise<Cart> {
 
   return res.body as Cart;
 }
+
+
+export async function addToCart(
+  lines: { merchandiseId: string; quantity: number }[]
+): Promise<Cart> {
+  try {
+    const cartId = (await cookies()).get('cart-id')?.value;
+
+    if (!cartId) {
+      throw new Error('Cart ID is missing from cookies.');
+    }
+
+    console.log("ADDING TO THE CART");
+    //TODO: Update to have a dynamic version - also why do we even need a version. 
+    // If we need a version, we need to update it constantly in a cookie
+    //TODO: Cart ID changed for me, need to figure out how to refresh my token without having to re-login/create a new cart
+    // if the cart ID changes, that's a problem.
+    console.log(`/admin/carts/${channelKey}/carts/${cartId}/line-items?version=6`)
+    const res = await cartApiFetch({
+      endpoint: `/admin/carts/${channelKey}/carts/688d1293e20bd7d98e698ccc/line-items?version=6`,
+      method: 'POST',
+      payload: {
+        sku: 'sku1',
+        productId: '001D',
+        productName: 'Shoes',
+        productType: 'physical',
+        skuName: 'Nike Shoe blue 7',
+        skuOptions: {
+          color: 'blue',
+          size: '7',
+        },
+      },
+    });
+
+    console.log('add to cart: ', res);
+
+    if (res.status >= 400) {
+      console.error(`Add to cart failed with status ${res.status}`, res.body);
+      throw new Error(`Add to cart failed: ${JSON.stringify(res.body)}`);
+    }
+
+    return res.body as Cart;
+
+  } catch (err) {
+    console.error('Error adding to cart:', err);
+
+    // Optional: rethrow or return a safe fallback
+    throw new Error(`Unable to add to cart. Reason: ${err instanceof Error ? err.message : 'Unknown error'}`);
+  }
+}
+
 
 // export async function addToCart(
 //   lines: { merchandiseId: string; quantity: number }[]

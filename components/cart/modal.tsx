@@ -171,8 +171,8 @@ export default function CartModal() {
                       <p>Taxes</p>
                       <Price
                         className="text-right text-base text-black dark:text-white"
-                        amount={cart.pricingSummary.totalTax.toString()}
-                        currencyCode={cart.currency}
+                        amount={cart?.pricingSummary?.totalTax?.toString()}
+                        currencyCode={cart?.currency}
                       />
                     </div>
                     <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1 dark:border-neutral-700">
@@ -183,8 +183,8 @@ export default function CartModal() {
                       <p>Total</p>
                       <Price
                         className="text-right text-base text-black dark:text-white"
-                        amount={cart.pricingSummary.subtotal}
-                        currencyCode={cart.currency}
+                        amount={cart?.pricingSummary?.subtotal}
+                        currencyCode={cart?.currency}
                       />
                     </div>
                   </div>

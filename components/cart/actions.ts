@@ -1,8 +1,8 @@
 'use server';
 
 import { TAGS } from '@lib/constants';
-import { addToCart, /*createCart, getCart,*/ removeFromCart, updateCart } from '@lib/shopify';
-import { /*addToCart,*/ createCart, getCart /*, removeFromCart, updateCart*/ } from '@lib/cart-api';
+import { /*addToCart, createCart, getCart,*/ removeFromCart, updateCart } from '@lib/shopify';
+import { addToCart, createCart, getCart /*, removeFromCart, updateCart*/ } from '@lib/cart-api';
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';

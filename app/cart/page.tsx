@@ -118,8 +118,8 @@ export default async function CartPage(props: { params: Promise<{ handle: string
                 <p>Taxes</p>
                 <Price
                   className="text-right text-base text-black dark:text-white"
-                  amount={cart.pricingSummary.totalTax.toString()}
-                  currencyCode={cart.currency}
+                  amount={cart?.pricingSummary?.totalTax?.toString()}
+                  currencyCode={cart?.currency}
                 />
               </div>
               <div className="mb-3 flex items-center justify-between  border-neutral-200 pb-1 pt-1 dark:border-neutral-700">
@@ -130,7 +130,7 @@ export default async function CartPage(props: { params: Promise<{ handle: string
                 <p>Total</p>
                 <Price
                   className="text-right text-base text-black dark:text-white"
-                  amount={cart.pricingSummary.subtotal}
+                  amount={cart?.pricingSummary?.subtotal?.toString()}
                   currencyCode={cart.currency}
                 />
               </div>
