@@ -94,12 +94,8 @@ export async function fetchAccessToken(): Promise<string> {
 
 
 export async function getCart(): Promise<Cart | undefined> {
-  console.log("=====================================")
-  console.log("=====================================")
   const cartId = (await cookies()).get('cart-id')?.value;
-  console.log(`cartId: `, cartId)
   if (!cartId) {
-    console.log("CartID is undefined")
     return undefined;
   }
 
@@ -113,14 +109,10 @@ export async function getCart(): Promise<Cart | undefined> {
     return undefined;
   }
 
-  return res.body as Cart;
+  return res.body.cart as Cart;
 }
 
 export async function createCart(): Promise<Cart> {
-  console.log("CREATING THE CART")
-  console.log("CREATING THE CART")
-  console.log("CREATING THE CART")
-  console.log(`channelKey: ${channelKey}`)
   const res = await cartApiFetch({
     endpoint: `/admin/carts/${channelKey}/carts`,
     method: 'POST',
@@ -129,8 +121,6 @@ export async function createCart(): Promise<Cart> {
       enforceInventory: true,
     },
   });
-
-  console.log('create cart: ', res);
 
   return res.body as Cart;
 }
@@ -141,19 +131,17 @@ export async function addToCart(
 ): Promise<Cart> {
   try {
     const cartId = (await cookies()).get('cart-id')?.value;
-
+    let cartVersion = (await cookies()).get('cart-version')?.value;
     if (!cartId) {
       throw new Error('Cart ID is missing from cookies.');
     }
+    if (!cartVersion) {
+      // Doing this temporarily since the cookie doesn't exist yet
+      cartVersion = '1';
+    }
 
-    console.log("ADDING TO THE CART");
-    //TODO: Update to have a dynamic version - also why do we even need a version. 
-    // If we need a version, we need to update it constantly in a cookie
-    //TODO: Cart ID changed for me, need to figure out how to refresh my token without having to re-login/create a new cart
-    // if the cart ID changes, that's a problem.
-    console.log(`/admin/carts/${channelKey}/carts/${cartId}/line-items?version=6`)
-    const res = await cartApiFetch({
-      endpoint: `/admin/carts/${channelKey}/carts/688d1293e20bd7d98e698ccc/line-items?version=6`,
+    let addToCartRequest = {
+      endpoint: `/admin/carts/${channelKey}/carts/${cartId}/line-items?version=${cartVersion}`,
       method: 'POST',
       payload: {
         sku: 'sku1',
@@ -166,15 +154,34 @@ export async function addToCart(
           size: '7',
         },
       },
-    });
+    }
 
-    console.log('add to cart: ', res);
+    //TODO: Cart ID changed for me, need to figure out how to refresh my token without having to re-login/create a new cart
+    // if the cart ID changes, that's a problem.
+    const res = await cartApiFetch(addToCartRequest);
+    if (res.status === 404) {
+      // Add to cart failed to find, get the latest version to see
+      // if that was the reason
+      const getCartResponse = await getCart();
+      if (getCartResponse === undefined || (getCartResponse?.version.toString() === cartVersion)) {
+        throw new Error(`Add to cart failed: ${JSON.stringify(res.body)}`);
+      }
+
+      addToCartRequest.endpoint = `/admin/carts/${channelKey}/carts/${cartId}/line-items?version=${getCartResponse?.version}`
+      const secondResponse = await cartApiFetch(addToCartRequest);
+
+      if (secondResponse.status >= 400) {
+        throw new Error(`Add to cart failed: ${JSON.stringify(secondResponse.body)}`);
+      } else {
+        // Updated Version add to cart worked
+        return secondResponse.body as Cart;
+      }
+    }
 
     if (res.status >= 400) {
       console.error(`Add to cart failed with status ${res.status}`, res.body);
       throw new Error(`Add to cart failed: ${JSON.stringify(res.body)}`);
     }
-
     return res.body as Cart;
 
   } catch (err) {
