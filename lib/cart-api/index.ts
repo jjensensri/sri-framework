@@ -130,14 +130,16 @@ export async function addToCart(
   lines: { merchandiseId: string; quantity: number }[]
 ): Promise<Cart> {
   try {
-    const cartId = (await cookies()).get('cart-id')?.value;
-    let cartVersion = (await cookies()).get('cart-version')?.value;
+    const cookieStore = await cookies();
+    const cartId = cookieStore.get('cart-id')?.value;
+    let cartVersion = Number(cookieStore.get('cart-version')?.value);
+
     if (!cartId) {
       throw new Error('Cart ID is missing from cookies.');
     }
-    if (!cartVersion) {
+    if (!cartVersion || isNaN(cartVersion)) {
       // Doing this temporarily since the cookie doesn't exist yet
-      cartVersion = '1';
+      cartVersion = 1;
     }
 
     let addToCartRequest = {
@@ -162,20 +164,12 @@ export async function addToCart(
     if (res.status === 404) {
       // Add to cart failed to find, get the latest version to see
       // if that was the reason
-      const getCartResponse = await getCart();
-      if (getCartResponse === undefined || (getCartResponse?.version.toString() === cartVersion)) {
-        throw new Error(`Add to cart failed: ${JSON.stringify(res.body)}`);
-      }
-
-      addToCartRequest.endpoint = `/admin/carts/${channelKey}/carts/${cartId}/line-items?version=${getCartResponse?.version}`
-      const secondResponse = await cartApiFetch(addToCartRequest);
-
-      if (secondResponse.status >= 400) {
-        throw new Error(`Add to cart failed: ${JSON.stringify(secondResponse.body)}`);
-      } else {
-        // Updated Version add to cart worked
-        return secondResponse.body as Cart;
-      }
+      return await retryWithNewCartVersion(
+        addToCartRequest,
+        cartVersion,
+        (newVersion) =>
+          `/admin/carts/${channelKey}/carts/${cartId}/line-items?version=${newVersion}`
+      );
     }
 
     if (res.status >= 400) {
@@ -192,6 +186,90 @@ export async function addToCart(
   }
 }
 
+export async function removeFromCart(lineIds: string[]): Promise<Cart> {
+  try {
+    const cookieStore = await cookies();
+    const cartId = cookieStore.get('cart-id')?.value;
+    let cartVersion = Number(cookieStore.get('cart-version')?.value);
+
+    if (!cartId) {
+      throw new Error('Cart ID is missing from cookies.');
+    }
+
+    if (!cartVersion || isNaN(cartVersion)) {
+      cartVersion = 1;
+    }
+
+    let latestCart: Cart | undefined;
+
+    for (const lineId of lineIds) {
+      const initialEndpoint = `/admin/carts/${channelKey}/carts/${cartId}/line-items/${lineId}?version=${cartVersion}`;
+      const request = {
+        endpoint: initialEndpoint,
+        method: 'DELETE',
+      };
+
+      const res = await cartApiFetch(request);
+
+      if (res.status === 404) {
+        // Retry with updated cart version
+        const retryResult = await retryWithNewCartVersion(
+          request,
+          cartVersion,
+          (newVersion) =>
+            `/admin/carts/${channelKey}/carts/${cartId}/line-items/${lineId}?version=${newVersion}`
+        );
+
+        cartVersion = retryResult.version;
+        latestCart = retryResult.cart;
+        continue;
+      }
+
+      if (res.status >= 400) {
+        throw new Error(`Remove from cart failed: ${JSON.stringify(res.body)}`);
+      }
+
+      latestCart = res.body as Cart;
+    }
+
+    if (!latestCart) {
+      throw new Error('No cart returned after removing items.');
+    }
+
+    return latestCart;
+  } catch (err) {
+    console.error('Error removing from cart:', err);
+    throw new Error(
+      `Unable to remove from cart. Reason: ${err instanceof Error ? err.message : 'Unknown error'}`
+    );
+  }
+}
+
+async function retryWithNewCartVersion(
+  request: { endpoint: string; method: string; payload?: any },
+  oldVersion: number,
+  updateEndpointVersion: (version: number) => string
+): Promise<Cart> {
+  const getCartResponse = await getCart();
+
+  if (!getCartResponse || getCartResponse.version === oldVersion) {
+    throw new Error(`Cart operation failed and cart version has not changed.`);
+  }
+
+  // Replace the endpoint using the new version via callback
+  const updatedRequest = {
+    ...request,
+    endpoint: updateEndpointVersion(getCartResponse.version),
+  };
+
+  const secondRes = await cartApiFetch(updatedRequest);
+
+  if (secondRes.status >= 400) {
+    throw new Error(`Retry failed: ${JSON.stringify(secondRes.body)}`);
+  }
+
+  return secondRes?.body?.cart as Cart;
+}
 
 // export async function addToCart(
 //   lines: { merchandiseId: string; quantity: number }[]
