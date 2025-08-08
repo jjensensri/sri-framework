@@ -1,6 +1,6 @@
 import { ProductGrid } from '@components/layout/product-grid';
-import { defaultSort, sorting } from '@lib/constants';
-import { getProducts } from '@lib/shopify';
+// import { defaultSort, sorting } from '@lib/constants';
+import { getProducts } from '@lib/catalog-api';
 
 export const metadata = {
   title: 'Search',

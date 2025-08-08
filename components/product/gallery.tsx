@@ -1,13 +1,13 @@
 'use client';
 
-import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
+import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import { ProductTile } from '@components/layout/product-tile';
 import { useProduct, useUpdateURL } from '@components/product/product-context';
+import { Image as ImageType } from '@lib/catalog-api/types';
 import Image from 'next/image';
 import { clsx } from 'clsx';
-import { is } from 'immutable';
 
-export function Gallery({ images }: { images: { src: string; altText: string }[] }) {
+export function Gallery({ images }: { images: ImageType[] }) {
   const { state, updateImage } = useProduct();
   const updateURL = useUpdateURL();
   const imageIndex = state.image ? parseInt(state.image) : 0;
@@ -27,7 +27,7 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
             fill
             sizes="(min-width: 1024px) 66vw, 100vw"
             alt={images[imageIndex]?.altText as string}
-            src={images[imageIndex]?.src as string}
+            src={images[imageIndex]?.url as string}
             priority={true}
           />
         )}
@@ -43,7 +43,7 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
                 aria-label="Previous product image"
                 className={buttonClassName}
               >
-                <ArrowLeftIcon className="h-5" />
+                <BsChevronLeft />
               </button>
               <div className="mx-1 h-6 w-px bg-neutral-500"></div>
               <button
@@ -54,7 +54,7 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
                 aria-label="Next product image"
                 className={buttonClassName}
               >
-                <ArrowRightIcon className="h-5" />
+                <BsChevronRight />
               </button>
             </div>
           </div>
@@ -67,7 +67,7 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
             const isActive = index === imageIndex;
 
             return (
-              <li key={image.src} className="h-20 w-20">
+              <li key={image.url} className="h-20 w-20">
                 <button
                   formAction={() => {
                     const newState = updateImage(index.toString());
@@ -87,8 +87,8 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
                   >
                     <Image
                       className={clsx('relative h-full w-full object-contain')}
-                      alt={image.altText}
-                      src={image.src}
+                      alt={image.altText || ''}
+                      src={image.url}
                       width={80}
                       height={80}
                     />

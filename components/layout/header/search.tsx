@@ -1,6 +1,6 @@
 'use client';
 
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { BsSearch } from 'react-icons/bs';
 import Form from 'next/form';
 import { useSearchParams } from 'next/navigation';
 import styles from './header.module.scss';
@@ -18,7 +18,7 @@ export default function Search() {
           type="submit"
           className={styles['search-icon']}
         >
-          <MagnifyingGlassIcon />
+          <BsSearch />
         </Button>
         <FormControl
           key={searchParams?.get('q')}
@@ -45,7 +45,7 @@ export function SearchSkeleton() {
           type="submit"
           className={styles['search-icon']}
         >
-          <MagnifyingGlassIcon className="h-4" />
+          <BsSearch />
         </Button>
       </InputGroup>
     </Form>

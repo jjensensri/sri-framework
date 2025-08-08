@@ -1,5 +1,5 @@
 import { ProductTile } from '@components/layout/product-tile';
-import type { Product } from '@lib/shopify/types';
+import type { Product } from '@lib/catalog-api/types';
 import styles from '@components/layout/product-carousel/product-carousel.module.scss';
 import { Carousel, CarouselItem, Col, Container, Row } from 'react-bootstrap';
 

@@ -1,9 +1,9 @@
 'use client';
 
-import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { BsPlus, BsDash } from 'react-icons/bs';
 import clsx from 'clsx';
-import { updateItemQuantity } from '@components/cart/actions';
-import type { CartItem } from '@lib/shopify/types';
+import { updateItem } from '@components/cart/actions';
+import type { LineItem } from '@lib/cart-api/types';
 import { useActionState } from 'react';
 import { useCart } from './cart-context';
 
@@ -20,28 +20,26 @@ function SubmitButton({ type }: { type: 'plus' | 'minus' }) {
       )}
     >
       {type === 'plus' ? (
-        <PlusIcon className="h-4 w-4 dark:text-neutral-500" />
+        <BsPlus className="h-4 w-4 dark:text-neutral-500" />
       ) : (
-        <MinusIcon className="h-4 w-4 dark:text-neutral-500" />
+        <BsDash className="h-4 w-4 dark:text-neutral-500" />
       )}
     </button>
   );
 }
 
-export function EditItemQuantityButton({ item, type }: { item: CartItem; type: 'plus' | 'minus' }) {
-  const [message, formAction] = useActionState(updateItemQuantity, null);
+export function EditItemQuantityButton({ item, type }: { item: LineItem; type: 'plus' | 'minus' }) {
+  const [message, formAction] = useActionState(updateItem, null);
   const payload = {
-    merchandiseId: item.merchandise.id,
+    lineItemId: item.id,
     quantity: type === 'plus' ? item.quantity + 1 : item.quantity - 1,
   };
-  const updateItemQuantityAction = formAction.bind(null, payload);
-  const { updateCartItem } = useCart();
+  const updateQuantityAction = formAction.bind(null, payload);
 
   return (
     <form
       action={async () => {
-        updateCartItem(payload.merchandiseId, type);
-        updateItemQuantityAction();
+        updateQuantityAction();
       }}
     >
       <SubmitButton type={type} />

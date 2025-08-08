@@ -1,6 +1,6 @@
 import { ProductCarousel } from '@components/layout/product-carousel';
 import { ProductGrid } from '@components/layout/product-grid';
-import { getCollectionProducts } from '@lib/shopify';
+import { getCollectionProducts } from '@lib/catalog-api';
 import { Col, Container, Row } from 'react-bootstrap';
 
 export const metadata = {
@@ -12,12 +12,26 @@ export const metadata = {
 };
 
 const HomePage = async () => {
-  const gridProducts = await getCollectionProducts({
-    collection: 'hidden-homepage-featured-items',
-  });
-  const carouselProducts = await getCollectionProducts({
-    collection: 'hidden-homepage-carousel',
-  });
+  const allProducts = (await getCollectionProducts('all-products')) || [];
+  const nikeSneakers = (await getCollectionProducts('nike-sneakers')) || [];
+  const reebokSneakers = (await getCollectionProducts('reebok-sneakers')) || [];
+
+  const gridProducts = [
+    ...allProducts,
+    ...nikeSneakers,
+    ...reebokSneakers,
+    ...nikeSneakers,
+    ...reebokSneakers,
+    ...allProducts,
+  ];
+  const carouselProducts = [
+    ...allProducts,
+    ...nikeSneakers,
+    ...reebokSneakers,
+    ...nikeSneakers,
+    ...reebokSneakers,
+    ...allProducts,
+  ];
 
   return (
     <>

@@ -13,16 +13,13 @@ import {
   OffcanvasTitle,
 } from 'react-bootstrap';
 import CartModal from '@components/cart/modal';
-import { getMenu } from '@lib/shopify';
-import { Menu } from '@lib/shopify/types';
 import LogoIcon from '@components/icons/logo';
 import Search from './search';
 
-const { SITE_NAME } = process.env;
+// todo: cms
+import menu from '@app/data/header.json';
 
 export const Header = async () => {
-  const menu = await getMenu('next-js-frontend-header-menu');
-
   return (
     <header className={styles.header}>
       <Navbar expand="md" collapseOnSelect>
@@ -41,7 +38,7 @@ export const Header = async () => {
               <OffcanvasBody className="justify-content-start">
                 {menu.length ? (
                   <Nav as="ul">
-                    {menu.map((item: Menu) => (
+                    {menu.map((item) => (
                       <li key={item.title}>
                         <NavLink href={item.path}>{item.title}</NavLink>
                       </li>

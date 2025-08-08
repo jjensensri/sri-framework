@@ -1,6 +1,5 @@
-import Collections from '@components/layout/search/collections';
 import FilterList from '@components/layout/search/filter';
-import { sorting } from '@lib/constants';
+// import { sorting } from '@lib/constants';
 import ChildrenWrapper from './children-wrapper';
 import React, { Suspense } from 'react';
 import Loading from '@app/search/loading';
@@ -13,7 +12,6 @@ export default function SearchLayout({ children }: { children: React.ReactNode }
       <Container>
         <Row>
           <Col xs={12} md={4} lg={3}>
-            <Collections />
             <FilterList list={sorting} title="Sort by" />
           </Col>
           <Col xs={12} md={8} lg={9}>

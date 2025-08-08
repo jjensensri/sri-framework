@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 
-import Prose from '@components/prose';
-import { getPage } from '@lib/shopify';
+import { getPage } from '@lib/cms-api';
 import { notFound } from 'next/navigation';
 
 export async function generateMetadata(props: {
@@ -32,7 +31,8 @@ export default async function Page(props: { params: Promise<{ page: string }> })
   return (
     <>
       <h1 className="mb-8 text-5xl font-bold">{page.title}</h1>
-      <Prose className="mb-8" html={page.body} />
+      <div className="mb-8">{page.body}</div>
+      {/*todo: this used to be prose */}
       <p className="text-sm italic">
         {`This document was last updated on ${new Intl.DateTimeFormat(undefined, {
           year: 'numeric',

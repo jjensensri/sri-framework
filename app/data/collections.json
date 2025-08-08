@@ -1,0 +1,513 @@
+[
+  {
+    "title": "All Products",
+    "description": "All products in the catalog.",
+    "handle": "all-products",
+    "seo": {
+      "title": "All Products",
+      "description": "All products in the catalog."
+    },
+    "products": [
+      {
+        "id": "product-2",
+        "handle": "reebok-mens-classic-nylon-shoes",
+        "availableForSale": true,
+        "title": "Reebok Men's Classic Nylon Shoes",
+        "description": "Classic everyday sneakers with a textured feel No matter where the day takes you next, these men's Reebok shoes are the perfect companion to get you there in style. True to their 1991 roots, they have a smooth nylon upper with buttery-soft suede overlays for a confident design you can mix or match with anything in your wardrobe.",
+        "options": [
+          {
+            "id": "10440380547209",
+            "name": "Size",
+            "values": ["9", "12"]
+          },
+          {
+            "id": "10440383824009",
+            "name": "Color",
+            "values": ["Red", "Beige"]
+          }
+        ],
+        "priceRange": {
+          "maxVariantPrice": {
+            "amount": "50.0",
+            "currencyCode": "USD"
+          },
+          "minVariantPrice": {
+            "amount": "50.0",
+            "currencyCode": "USD"
+          }
+        },
+        "featuredImage": {
+          "url": "/images/sku2--0.png",
+          "altText": null,
+          "width": 2400,
+          "height": 2400
+        },
+        "seo": {
+          "description": null,
+          "title": null
+        },
+        "tags": [],
+        "updatedAt": "2025-08-07T17:38:15Z",
+        "images": [
+          {
+            "url": "/images/sku2--0.png",
+            "altText": "Reebok Men's Classic Nylon Shoes - sku2--0",
+            "width": 2400,
+            "height": 2400
+          },
+          {
+            "url": "/images/sku2--1.png",
+            "altText": "Reebok Men's Classic Nylon Shoes - sku2--1",
+            "width": 2400,
+            "height": 2400
+          },
+          {
+            "url": "/images/sku2--2.png",
+            "altText": "Reebok Men's Classic Nylon Shoes - sku2--2",
+            "width": 2400,
+            "height": 2400
+          },
+          {
+            "url": "/images/sku3--0.png",
+            "altText": "Reebok Men's Classic Nylon Shoes - sku3--0",
+            "width": 2000,
+            "height": 2000
+          },
+          {
+            "url": "/images/sku3--1.png",
+            "altText": "Reebok Men's Classic Nylon Shoes - sku3--1",
+            "width": 2000,
+            "height": 2000
+          },
+          {
+            "url": "/images/sku3--2.png",
+            "altText": "Pair of Reebok Classic sneakers on a white background",
+            "width": 2000,
+            "height": 2000
+          }
+        ],
+        "variants": [
+          {
+            "id": "sku2",
+            "title": "9 / Red",
+            "availableForSale": true,
+            "selectedOptions": [
+              {
+                "name": "Size",
+                "value": "9"
+              },
+              {
+                "name": "Color",
+                "value": "Red"
+              }
+            ],
+            "price": {
+              "amount": "50.0",
+              "currencyCode": "USD"
+            }
+          },
+          {
+            "id": "sku4",
+            "title": "9 / Beige",
+            "availableForSale": true,
+            "selectedOptions": [
+              {
+                "name": "Size",
+                "value": "9"
+              },
+              {
+                "name": "Color",
+                "value": "Beige"
+              }
+            ],
+            "price": {
+              "amount": "50.0",
+              "currencyCode": "USD"
+            }
+          },
+          {
+            "id": "sku3",
+            "title": "12 / Red",
+            "availableForSale": true,
+            "selectedOptions": [
+              {
+                "name": "Size",
+                "value": "12"
+              },
+              {
+                "name": "Color",
+                "value": "Red"
+              }
+            ],
+            "price": {
+              "amount": "50.0",
+              "currencyCode": "USD"
+            }
+          },
+          {
+            "id": "sku5",
+            "title": "12 / Beige",
+            "availableForSale": true,
+            "selectedOptions": [
+              {
+                "name": "Size",
+                "value": "12"
+              },
+              {
+                "name": "Color",
+                "value": "Beige"
+              }
+            ],
+            "price": {
+              "amount": "50.0",
+              "currencyCode": "USD"
+            }
+          }
+        ]
+      },
+      {
+        "id": "product-1",
+        "handle": "nike-shoe-blue-7",
+        "availableForSale": true,
+        "title": "Nike Men's Pacific Shoes",
+        "description": "Throw it back to the 1970's with the Nike Men's Pacific Shoes. The single piece injected midsoles promote flexibility, while the herringbone outsoles and flex gloves provide lasting comfort. The wide collar openings and puffed Swoosh logos deliver a retro look.",
+        "options": [
+          {
+            "id": "10440377335945",
+            "name": "Size",
+            "values": ["7"]
+          },
+          {
+            "id": "10440377368713",
+            "name": "Color",
+            "values": ["Blue"]
+          }
+        ],
+        "priceRange": {
+          "maxVariantPrice": {
+            "amount": "10.0",
+            "currencyCode": "USD"
+          },
+          "minVariantPrice": {
+            "amount": "10.0",
+            "currencyCode": "USD"
+          }
+        },
+        "featuredImage": {
+          "url": "/images/sku1--0.png",
+          "altText": "Navy blue and white sneaker with a prominent Nike logo on a white background",
+          "width": 1320,
+          "height": 1320
+        },
+        "seo": {
+          "description": null,
+          "title": null
+        },
+        "tags": [],
+        "updatedAt": "2025-08-05T02:42:00Z",
+        "images": [
+          {
+            "url": "/images/sku1--0.png",
+            "altText": "Navy blue and white sneaker with a prominent Nike logo on a white background",
+            "width": 1320,
+            "height": 1320
+          },
+          {
+            "url": "/images/sku1--1.png",
+            "altText": "Pair of navy blue and white sneakers with a visible Nike logo on a white background",
+            "width": 1320,
+            "height": 1320
+          },
+          {
+            "url": "/images/sku1--2.png",
+            "altText": "Pair of blue and white sneakers with Nike logo on a white background",
+            "width": 1320,
+            "height": 1320
+          }
+        ],
+        "variants": [
+          {
+            "id": "sku1",
+            "title": "7 / Blue",
+            "availableForSale": true,
+            "selectedOptions": [
+              {
+                "name": "Size",
+                "value": "7"
+              },
+              {
+                "name": "Color",
+                "value": "Blue"
+              }
+            ],
+            "price": {
+              "amount": "10.0",
+              "currencyCode": "USD"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Reebok Sneakers",
+    "description": "All Reebok sneakers in the catalog.",
+    "handle": "reebok-sneakers",
+    "seo": {
+      "title": "Reebok Sneakers",
+      "description": "All Reebok sneakers in the catalog."
+    },
+    "products": [
+      {
+        "id": "product-2",
+        "handle": "reebok-mens-classic-nylon-shoes",
+        "availableForSale": true,
+        "title": "Reebok Men's Classic Nylon Shoes",
+        "description": "Classic everyday sneakers with a textured feel No matter where the day takes you next, these men's Reebok shoes are the perfect companion to get you there in style. True to their 1991 roots, they have a smooth nylon upper with buttery-soft suede overlays for a confident design you can mix or match with anything in your wardrobe.",
+        "options": [
+          {
+            "id": "10440380547209",
+            "name": "Size",
+            "values": ["9", "12"]
+          },
+          {
+            "id": "10440383824009",
+            "name": "Color",
+            "values": ["Red", "Beige"]
+          }
+        ],
+        "priceRange": {
+          "maxVariantPrice": {
+            "amount": "50.0",
+            "currencyCode": "USD"
+          },
+          "minVariantPrice": {
+            "amount": "50.0",
+            "currencyCode": "USD"
+          }
+        },
+        "featuredImage": {
+          "url": "/images/sku2--0.png",
+          "altText": null,
+          "width": 2400,
+          "height": 2400
+        },
+        "seo": {
+          "description": null,
+          "title": null
+        },
+        "tags": [],
+        "updatedAt": "2025-08-07T17:38:15Z",
+        "images": [
+          {
+            "url": "/images/sku2--0.png",
+            "altText": "Reebok Men's Classic Nylon Shoes - sku2--0",
+            "width": 2400,
+            "height": 2400
+          },
+          {
+            "url": "/images/sku2--1.png",
+            "altText": "Reebok Men's Classic Nylon Shoes - sku2--1",
+            "width": 2400,
+            "height": 2400
+          },
+          {
+            "url": "/images/sku2--2.png",
+            "altText": "Reebok Men's Classic Nylon Shoes - sku2--2",
+            "width": 2400,
+            "height": 2400
+          },
+          {
+            "url": "/images/sku3--0.png",
+            "altText": "Reebok Men's Classic Nylon Shoes - sku3--0",
+            "width": 2000,
+            "height": 2000
+          },
+          {
+            "url": "/images/sku3--1.png",
+            "altText": "Reebok Men's Classic Nylon Shoes - sku3--1",
+            "width": 2000,
+            "height": 2000
+          },
+          {
+            "url": "/images/sku3--2.png",
+            "altText": "Pair of Reebok Classic sneakers on a white background",
+            "width": 2000,
+            "height": 2000
+          }
+        ],
+        "variants": [
+          {
+            "id": "sku2",
+            "title": "9 / Red",
+            "availableForSale": true,
+            "selectedOptions": [
+              {
+                "name": "Size",
+                "value": "9"
+              },
+              {
+                "name": "Color",
+                "value": "Red"
+              }
+            ],
+            "price": {
+              "amount": "50.0",
+              "currencyCode": "USD"
+            }
+          },
+          {
+            "id": "sku4",
+            "title": "9 / Beige",
+            "availableForSale": true,
+            "selectedOptions": [
+              {
+                "name": "Size",
+                "value": "9"
+              },
+              {
+                "name": "Color",
+                "value": "Beige"
+              }
+            ],
+            "price": {
+              "amount": "50.0",
+              "currencyCode": "USD"
+            }
+          },
+          {
+            "id": "sku3",
+            "title": "12 / Red",
+            "availableForSale": true,
+            "selectedOptions": [
+              {
+                "name": "Size",
+                "value": "12"
+              },
+              {
+                "name": "Color",
+                "value": "Red"
+              }
+            ],
+            "price": {
+              "amount": "50.0",
+              "currencyCode": "USD"
+            }
+          },
+          {
+            "id": "sku5",
+            "title": "12 / Beige",
+            "availableForSale": true,
+            "selectedOptions": [
+              {
+                "name": "Size",
+                "value": "12"
+              },
+              {
+                "name": "Color",
+                "value": "Beige"
+              }
+            ],
+            "price": {
+              "amount": "50.0",
+              "currencyCode": "USD"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Nike Sneakers",
+    "description": "All Nike sneakers in the catalog.",
+    "handle": "nike-sneakers",
+    "seo": {
+      "title": "Nike Sneakers",
+      "description": "All Nike sneakers in the catalog."
+    },
+    "products": [
+      {
+        "id": "product-1",
+        "handle": "nike-shoe-blue-7",
+        "availableForSale": true,
+        "title": "Nike Men's Pacific Shoes",
+        "description": "Throw it back to the 1970's with the Nike Men's Pacific Shoes. The single piece injected midsoles promote flexibility, while the herringbone outsoles and flex gloves provide lasting comfort. The wide collar openings and puffed Swoosh logos deliver a retro look.",
+        "options": [
+          {
+            "id": "10440377335945",
+            "name": "Size",
+            "values": ["7"]
+          },
+          {
+            "id": "10440377368713",
+            "name": "Color",
+            "values": ["Blue"]
+          }
+        ],
+        "priceRange": {
+          "maxVariantPrice": {
+            "amount": "10.0",
+            "currencyCode": "USD"
+          },
+          "minVariantPrice": {
+            "amount": "10.0",
+            "currencyCode": "USD"
+          }
+        },
+        "featuredImage": {
+          "url": "/images/sku1--0.png",
+          "altText": "Navy blue and white sneaker with a prominent Nike logo on a white background",
+          "width": 1320,
+          "height": 1320
+        },
+        "seo": {
+          "description": null,
+          "title": null
+        },
+        "tags": [],
+        "updatedAt": "2025-08-05T02:42:00Z",
+        "images": [
+          {
+            "url": "/images/sku1--0.png",
+            "altText": "Navy blue and white sneaker with a prominent Nike logo on a white background",
+            "width": 1320,
+            "height": 1320
+          },
+          {
+            "url": "/images/sku1--1.png",
+            "altText": "Pair of navy blue and white sneakers with a visible Nike logo on a white background",
+            "width": 1320,
+            "height": 1320
+          },
+          {
+            "url": "/images/sku1--2.png",
+            "altText": "Pair of blue and white sneakers with Nike logo on a white background",
+            "width": 1320,
+            "height": 1320
+          }
+        ],
+        "variants": [
+          {
+            "id": "sku1",
+            "title": "7 / Blue",
+            "availableForSale": true,
+            "selectedOptions": [
+              {
+                "name": "Size",
+                "value": "7"
+              },
+              {
+                "name": "Color",
+                "value": "Blue"
+              }
+            ],
+            "price": {
+              "amount": "10.0",
+              "currencyCode": "USD"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

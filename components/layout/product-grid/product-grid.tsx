@@ -1,5 +1,5 @@
 import { ProductTile } from '@components/layout/product-tile';
-import type { Product } from '@lib/shopify/types';
+import type { Product } from '@lib/catalog-api/types';
 import { Col, Container, Row } from 'react-bootstrap';
 import styles from './product-grid.module.scss';
 
@@ -18,6 +18,8 @@ export const ProductGrid = async ({
     (min-width: 576px) ${perRow?.sm ? 100 / perRow.sm : '100'}vw
     ${perRow?.xs ? 100 / perRow?.xs : '100'}vw
   `;
+
+  console.log('products: ', products);
 
   return (
     <section className={`${styles['product-grid']} product-grid`}>
@@ -40,9 +42,9 @@ export const ProductGrid = async ({
                     </Col>
                   );
                 })
-            : products.map((product) => {
+            : products.map((product, index) => {
                 return (
-                  <Col key={product.handle} className="animate-fade-in">
+                  <Col key={`${product.handle}-${index}`} className="animate-fade-in">
                     <ProductTile product={product} sizes={sizes} />
                   </Col>
                 );

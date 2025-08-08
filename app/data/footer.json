@@ -1,0 +1,65 @@
+[
+  {
+    "title": "Shop",
+    "items": [
+      {
+        "title": "All collections",
+        "path": "/search"
+      },
+      {
+        "title": "All Products",
+        "path": "/search/all-products"
+      },
+      {
+        "title": "Nike Sneakers",
+        "path": "/search/nike-sneakers"
+      },
+      {
+        "title": "Reebok Sneakers",
+        "path": "/search/reebok-sneakers"
+      }
+    ]
+  },
+  {
+    "title": "Help",
+    "items": [
+      {
+        "title": "Home",
+        "path": "/"
+      },
+      {
+        "title": "Search",
+        "path": "/search"
+      },
+      {
+        "title": "Your privacy choices",
+        "path": "/data-sharing-opt-out"
+      }
+    ]
+  },
+  {
+    "title": "Legal",
+    "items": [
+      {
+        "title": "Contact Information",
+        "path": "/policies/contact-information"
+      },
+      {
+        "title": "Privacy Policy",
+        "path": "/policies/privacy-policy"
+      },
+      {
+        "title": "Refund Policy",
+        "path": "/policies/refund-policy"
+      },
+      {
+        "title": "Shipping Policy",
+        "path": "/policies/shipping-policy"
+      },
+      {
+        "title": "Terms of Service",
+        "path": "/policies/terms-of-service"
+      }
+    ]
+  }
+]

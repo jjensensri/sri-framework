@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import { useProduct, useUpdateURL } from '@components/product/product-context';
-import { ProductOption, ProductVariant } from '@lib/shopify/types';
+import { Option, Variant } from '@lib/catalog-api/types';
 
 type Combination = {
   id: string;
@@ -10,13 +10,7 @@ type Combination = {
   [key: string]: string | boolean;
 };
 
-export function VariantSelector({
-  options,
-  variants,
-}: {
-  options: ProductOption[];
-  variants: ProductVariant[];
-}) {
+export function VariantSelector({ options, variants }: { options: Option[]; variants: Variant[] }) {
   const { state, updateOption } = useProduct();
   const updateURL = useUpdateURL();
   const hasNoOptionsOrJustOneOption =

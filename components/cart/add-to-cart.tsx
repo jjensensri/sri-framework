@@ -1,12 +1,11 @@
 'use client';
 
-import { PlusIcon } from '@heroicons/react/24/outline';
+import { BsPlus } from 'react-icons/bs';
 import clsx from 'clsx';
 import { addItem } from '@components/cart/actions';
 import { useProduct } from '@components/product/product-context';
-import { Product, ProductVariant } from '@lib/shopify/types';
+import { Product, Variant } from '@lib/catalog-api/types';
 import { useActionState } from 'react';
-import { useCart } from './cart-context';
 
 function SubmitButton({
   availableForSale,
@@ -35,7 +34,7 @@ function SubmitButton({
         className={clsx(buttonClasses, disabledClasses)}
       >
         <div className="absolute left-0 ml-4">
-          <PlusIcon className="h-5" />
+          <BsPlus />
         </div>
         Add To Cart
       </button>
@@ -56,22 +55,26 @@ function SubmitButton({
 
 export function AddToCart({ product }: { product: Product }) {
   const { variants, availableForSale } = product;
-  const { addCartItem } = useCart();
   const { state } = useProduct();
   const [message, formAction] = useActionState(addItem, null);
 
-  const variant = variants.find((variant: ProductVariant) =>
-    variant.selectedOptions.every((option) => option.value === state[option.name.toLowerCase()])
+  const variant = variants.find((variant: Variant) =>
+    variant.selectedOptions.every(
+      (option: any) => option.value === state[option.name.toLowerCase()]
+    )
   );
   const defaultVariantId = variants.length === 1 ? variants[0]?.id : undefined;
   const selectedVariantId = variant?.id || defaultVariantId;
-  const addItemAction = formAction.bind(null, selectedVariantId);
-  const finalVariant = variants.find((variant) => variant.id === selectedVariantId)!;
+  const finalVariant = variants.find((variant: any) => variant.id === selectedVariantId)!;
+  const payload = {
+    skuId: finalVariant?.id,
+    quantity: 1, // todo: josh add qty selector
+  };
+  const addItemAction = formAction.bind(null, payload);
 
   return (
     <form
       action={async () => {
-        addCartItem(finalVariant, product);
         addItemAction();
       }}
     >

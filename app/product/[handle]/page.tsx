@@ -4,12 +4,11 @@ import { notFound } from 'next/navigation';
 import { Gallery } from '@components/product/gallery';
 import { ProductProvider } from '@components/product/product-context';
 import { ProductDescription } from '@components/product/product-description';
-import { HIDDEN_PRODUCT_TAG } from '@lib/constants';
-import { getProduct, getProductRecommendations } from '@lib/shopify';
-import { Image } from '@lib/shopify/types';
+import { getProduct, getProductRecommendations } from '@lib/catalog-api';
 import { Suspense } from 'react';
 import { ProductGrid } from '@components/layout/product-grid';
 import { Col, Container, Row } from 'react-bootstrap';
+import { Image } from '@lib/catalog-api/types';
 
 export async function generateMetadata(props: {
   params: Promise<{ handle: string }>;
@@ -19,18 +18,17 @@ export async function generateMetadata(props: {
 
   if (!product) return notFound();
 
-  const { url, width, height, altText: alt } = product.featuredImage || {};
-  const indexable = !product.tags.includes(HIDDEN_PRODUCT_TAG);
+  const { url, width, height, altText } = product.featuredImage;
 
   return {
     title: product.seo.title || product.title,
     description: product.seo.description || product.description,
     robots: {
-      index: indexable,
-      follow: indexable,
+      index: true,
+      follow: true,
       googleBot: {
-        index: indexable,
-        follow: indexable,
+        index: true,
+        follow: true,
       },
     },
     openGraph: url
@@ -40,7 +38,7 @@ export async function generateMetadata(props: {
               url,
               width,
               height,
-              alt,
+              alt: altText ? altText : undefined,
             },
           ],
         }
@@ -87,12 +85,7 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
                 <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden" />
               }
             >
-              <Gallery
-                images={product.images.slice(0, 5).map((image: Image) => ({
-                  src: image.url,
-                  altText: image.altText,
-                }))}
-              />
+              <Gallery images={product.images} />
             </Suspense>
           </div>
 

@@ -1,25 +1,31 @@
 'use server';
 
-import { TAGS } from '@lib/constants';
-import { addToCart, createCart, getCart, removeFromCart, updateCart } from '@lib/shopify';
-import { revalidateTag } from 'next/cache';
+import { addToCart, createCart, getCart, removeFromCart, updateCart } from '@lib/cart-api';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-export async function addItem(prevState: any, selectedVariantId: string | undefined) {
-  if (!selectedVariantId) {
+export async function addItem(
+  prevState: any,
+  payload: {
+    skuId: string;
+    quantity: number;
+  }
+): Promise<string> {
+  const { skuId, quantity } = payload;
+
+  if (!skuId) {
     return 'Error adding item to cart';
   }
 
   try {
-    await addToCart([{ merchandiseId: selectedVariantId, quantity: 1 }]);
-    revalidateTag(TAGS.cart);
+    await addToCart(skuId, quantity || 1);
+    return 'Item added to cart successfully';
   } catch (e) {
     return 'Error adding item to cart';
   }
 }
 
-export async function removeItem(prevState: any, merchandiseId: string) {
+export async function removeItem(prevState: any, lineItemId: string): Promise<string> {
   try {
     const cart = await getCart();
 
@@ -27,11 +33,16 @@ export async function removeItem(prevState: any, merchandiseId: string) {
       return 'Error fetching cart';
     }
 
-    const lineItem = cart.lines.find((line) => line.merchandise.id === merchandiseId);
+    const lineItem: any = cart.lineItems?.find((line: any) => line.id === lineItemId);
 
-    if (lineItem && lineItem.id) {
-      await removeFromCart([lineItem.id]);
-      revalidateTag(TAGS.cart);
+    if (lineItem && lineItem?.id) {
+      try {
+        await removeFromCart(lineItemId);
+        return 'Item removed from cart successfully';
+      } catch (e) {
+        console.error(e);
+        return 'Error removing item from cart';
+      }
     } else {
       return 'Item not found in cart';
     }
@@ -40,14 +51,14 @@ export async function removeItem(prevState: any, merchandiseId: string) {
   }
 }
 
-export async function updateItemQuantity(
+export async function updateItem(
   prevState: any,
   payload: {
-    merchandiseId: string;
+    lineItemId: string;
     quantity: number;
   }
-) {
-  const { merchandiseId, quantity } = payload;
+): Promise<string> {
+  const { lineItemId, quantity } = payload;
 
   try {
     const cart = await getCart();
@@ -56,26 +67,38 @@ export async function updateItemQuantity(
       return 'Error fetching cart';
     }
 
-    const lineItem = cart.lines.find((line) => line.merchandise.id === merchandiseId);
+    const lineItem: any = cart.lineItems?.find((line: any) => line.id === lineItemId);
 
     if (lineItem && lineItem.id) {
       if (quantity === 0) {
-        await removeFromCart([lineItem.id]);
+        try {
+          await removeFromCart(lineItemId);
+          return 'Item updated successfully';
+        } catch (e) {
+          console.error(e);
+          return 'Error updating item quantity';
+        }
       } else {
-        await updateCart([
-          {
-            id: lineItem.id,
-            merchandiseId,
-            quantity,
-          },
-        ]);
+        try {
+          await updateCart(lineItemId, quantity);
+          return 'Item updated successfully';
+        } catch (e) {
+          console.error(e);
+          return 'Error updating item quantity';
+        }
       }
     } else if (quantity > 0) {
       // If the item doesn't exist in the cart and quantity > 0, add it
-      await addToCart([{ merchandiseId, quantity }]);
+      try {
+        await addToCart(lineItemId, quantity);
+        return 'Item updated successfully';
+      } catch (e) {
+        console.error(e);
+        return 'Error updating item quantity';
+      }
+    } else {
+      return 'How did you get here?';
     }
-
-    revalidateTag(TAGS.cart);
   } catch (e) {
     console.error(e);
     return 'Error updating item quantity';
@@ -83,11 +106,10 @@ export async function updateItemQuantity(
 }
 
 export async function redirectToCheckout() {
-  let cart = await getCart();
-  redirect(cart!.checkoutUrl);
+  redirect('/checkout');
 }
 
 export async function createCartAndSetCookie() {
   let cart = await createCart();
-  (await cookies()).set('cartId', cart.id!);
+  (await cookies()).set('cart-id', cart.id!);
 }

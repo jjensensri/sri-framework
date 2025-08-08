@@ -5,8 +5,12 @@
   display: block;
   text-decoration: none;
   color: $black;
-  margin-bottom: 24px !important;
+  height: 100%;
+  padding-bottom: calc(var(--bs-gutter-x));
 
+  :global(.card) {
+    height: 100%;
+  }
   :global(.card-title) {
     margin-bottom: 4px;
 
@@ -25,7 +29,6 @@
   img {
     width: 100%;
     height: auto !important;
-    aspect-ratio: 4/3;
     border-top-left-radius: var(--bs-card-inner-border-radius);
     border-top-right-radius: var(--bs-card-inner-border-radius);
   }

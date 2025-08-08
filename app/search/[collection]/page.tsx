@@ -1,9 +1,9 @@
-import { getCollection, getCollectionProducts } from '@lib/shopify';
+import { getCollection, getCollectionProducts } from '@lib/catalog-api';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { ProductGrid } from '@components/layout/product-grid';
-import { defaultSort, sorting } from '@lib/constants';
+// import { defaultSort, sorting } from '@lib/constants';
 
 export async function generateMetadata(props: {
   params: Promise<{ collection: string }>;
@@ -24,15 +24,11 @@ export default async function CategoryPage(props: {
   params: Promise<{ collection: string }>;
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const searchParams = await props.searchParams;
+  // const searchParams = await props.searchParams;
   const params = await props.params;
-  const { sort } = searchParams as { [key: string]: string };
-  const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
-  const products = await getCollectionProducts({
-    collection: params.collection,
-    sortKey,
-    reverse,
-  });
+  // const { sort } = searchParams as { [key: string]: string };
+  // const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
+  const products = (await getCollectionProducts(params.collection)) || [];
 
   return (
     <section>

@@ -27,8 +27,6 @@ $container-max-widths: (
 // colors
 $blue: #112d53;
 $light-blue: #8fbdef;
-$linkedin-blue: #0072b1;
-$linkedin-blue-hover: darken($linkedin-blue, 10%);
 $red: #dd1a26;
 $red-on-blue-ada: lighten($red, 19);
 $red-hover-bg: #bc1620;
@@ -46,13 +44,6 @@ $colors: (
 );
 $focus-ring-color: $light-blue;
 
-// accordions
-$accordion-border-radius: 0;
-$accordion-border-color: $black;
-$accordion-button-padding-x: 0;
-$accordion-body-padding-x: 0;
-$accordion-button-active-bg: none;
-
 // box-shadows
 $box-shadow: 0 0.5rem 1rem rgba($black, 0.1);
 $box-shadow-sm: 0 0.125rem 0.25rem rgba($black, 0.075);
@@ -65,8 +56,8 @@ $border-radius-sm: 8px;
 $border-radius-lg: 32px;
 
 // fonts
-$font-family-sans-serif: 'Source Sans 3', sans-serif;
-$headings-font-family: 'Poppins', sans-serif;
+$font-family-sans-serif: 'Assistant', sans-serif;
+$headings-font-family: 'Montserrat', sans-serif;
 $headings-font-weight: 700;
 $headings-line-height: 1.4;
 
@@ -84,6 +75,3 @@ $btn-close-focus-shadow: none;
 $input-border-radius: $border-radius;
 $input-border-radius-sm: $border-radius-sm;
 $input-border-radius-lg: $border-radius-lg;
-
-// toasts
-$toast-spacing: 24px;
