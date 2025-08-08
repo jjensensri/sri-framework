@@ -12,7 +12,7 @@ import {
   OffcanvasHeader,
   OffcanvasTitle,
 } from 'react-bootstrap';
-import CartModal from '@components/cart/modal';
+import SideCart from '@components/cart/side-cart';
 import LogoIcon from '@components/icons/logo';
 import Search from './search';
 
@@ -49,7 +49,7 @@ export const Header = async () => {
             </NavbarOffcanvas>
           </NavbarCollapse>
           <Search />
-          <CartModal />
+          <SideCart />
         </Container>
       </Navbar>
     </header>

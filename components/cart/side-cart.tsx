@@ -12,18 +12,28 @@ import { createCartAndSetCookie, redirectToCheckout } from './actions';
 import { useCart } from './cart-context';
 import { DeleteItemButton } from './delete-item-button';
 import { EditItemQuantityButton } from './edit-item-quantity-button';
-import OpenCart from './open-cart';
+import {
+  Button,
+  Nav,
+  NavbarOffcanvas,
+  NavLink,
+  Offcanvas,
+  OffcanvasBody,
+  OffcanvasHeader,
+  OffcanvasTitle,
+} from 'react-bootstrap';
+import menu from '@app/data/header.json';
 
 type MerchandiseSearchParams = {
   [key: string]: string;
 };
 
-export default function CartModal() {
-  const { cart } = useCart();
-  const [isOpen, setIsOpen] = useState(false);
-  const quantityRef = useRef(cart?.totalQuantity);
-  const openCart = () => setIsOpen(true);
-  const closeCart = () => setIsOpen(false);
+export default function SideCart() {
+  const { cart, cartQuantity } = useCart();
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const quantityRef = useRef(cartQuantity);
+  const openCart = () => setIsCartOpen(true);
+  const closeCart = () => setIsCartOpen(false);
 
   useEffect(() => {
     if (!cart) {
@@ -31,25 +41,35 @@ export default function CartModal() {
     }
   }, [cart]);
 
-  useEffect(() => {
-    if (
-      cart?.totalQuantity &&
-      cart?.totalQuantity !== quantityRef.current &&
-      cart?.totalQuantity > 0
-    ) {
-      if (!isOpen) {
-        setIsOpen(true);
-      }
-      quantityRef.current = cart?.totalQuantity;
-    }
-  }, [isOpen, cart?.totalQuantity, quantityRef]);
+  // useEffect(() => {
+  //   if (
+  //     cart?.totalQuantity &&
+  //     cart?.totalQuantity !== quantityRef.current &&
+  //     cart?.totalQuantity > 0
+  //   ) {
+  //     if (!isOpen) {
+  //       setIsOpen(true);
+  //     }
+  //     quantityRef.current = cart?.totalQuantity;
+  //   }
+  // }, [isOpen, cart?.totalQuantity, quantityRef]);
 
   return (
     <>
-      <button aria-label="Open cart" onClick={openCart}>
-        <OpenCart quantity={cart?.totalQuantity} />
-      </button>
-      {/* TODO: replace with offcanvas */}
+      <Button variant={'light'} onClick={openCart}>
+        <BsBag />
+        {cartQuantity ? <div className={'cart-quantity'}>{cartQuantity}</div> : null}
+      </Button>
+
+      <Offcanvas show={isCartOpen} onHide={closeCart} placement={'end'}>
+        <OffcanvasHeader closeButton>
+          <OffcanvasTitle>Bag</OffcanvasTitle>
+        </OffcanvasHeader>
+        <OffcanvasBody>
+          Some text as placeholder. In real life you can have the elements you have chosen. Like,
+          text, images, lists, etc.
+        </OffcanvasBody>
+      </Offcanvas>
 
       {/*<Transition show={isOpen}>*/}
       {/*  <Dialog onClose={closeCart} className="relative z-50">*/}

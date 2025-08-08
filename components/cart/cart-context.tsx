@@ -25,5 +25,10 @@ export function useCart() {
     throw new Error('useCart must be used within a CartProvider');
   }
 
-  return use(context.cartPromise);
+  return {
+    cart: use(context.cartPromise),
+    cartQuantity: use(context.cartPromise)
+      ?.lineItems?.flatMap((i) => i.quantity)
+      .reduce((total, currentValue) => total + currentValue, 0),
+  };
 }
