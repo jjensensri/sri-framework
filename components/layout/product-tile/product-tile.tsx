@@ -10,7 +10,13 @@ export const ProductTile = ({ product, sizes }: { product: Product; sizes: strin
     <Link href={`/product/${product.handle}`} prefetch={true} className={styles['product-tile']}>
       <Card>
         <div className={styles['product-image']}>
-          <Image src={product?.featuredImage?.url || ''} alt={product?.title} sizes={sizes} fill />
+          <Image
+            src={product?.featuredImage?.url || ''}
+            alt={product?.title}
+            sizes={sizes}
+            width={1}
+            height={1}
+          />
         </div>
         <CardBody>
           <CardTitle>

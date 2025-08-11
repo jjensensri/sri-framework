@@ -2,7 +2,7 @@ import '@styles/globals.scss';
 import './globals.css'; // get rid of this after removing tailwind
 
 import { CartProvider } from '@components/cart/cart-context';
-import { Poppins, Source_Sans_3 } from 'next/font/google';
+import { Assistant, Montserrat, Mulish, Poppins, Source_Sans_3 } from 'next/font/google';
 // import { getCart } from '@lib/shopify';
 import { getCart } from '@lib/cart-api';
 import { ReactNode } from 'react';
@@ -14,17 +14,17 @@ import { Footer } from '@components/layout/footer/index';
 const { SITE_NAME } = process.env;
 
 // Font
-const poppins = Poppins({
-  variable: '--font-poppins',
+const assistant = Assistant({
+  variable: '--font-assistant',
   subsets: ['latin'],
   display: 'swap',
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  weight: ['300', '400', '700'],
 });
-const sourceSans3 = Source_Sans_3({
-  variable: '--font-source-sans',
+const montserrat = Montserrat({
+  variable: '--font-montserrat',
   subsets: ['latin'],
   display: 'swap',
-  weight: ['400', '700'],
+  weight: ['700'],
 });
 
 export const metadata = {
@@ -44,7 +44,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const cart = getCart();
 
   return (
-    <html lang="en" className={`${poppins.variable} ${sourceSans3.variable}`}>
+    <html lang="en" className={`${assistant.variable} ${montserrat.variable}`}>
       <body>
         <CartProvider cartPromise={cart}>
           <Header />
