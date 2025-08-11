@@ -1,40 +1,55 @@
 {
   "cart": {
+    "id": "6895f9199cdf34225e1e6ff5",
+    "version": 32,
+    "currency": "USD",
+    "country": "US",
+    "shippingMode": "S",
+    "deleteAfterDays": 90,
+    "enforceInventory": true,
+    "origin": "C",
+    "state": "A",
     "channelId": "6895f8bb9cdf34225e1e6ff3",
     "channelKey": "ch11730",
-    "country": "US",
-    "currency": "USD",
     "customer": {
       "id": "6895f8a39cdf34225e1e6ff1",
       "isAnonymous": false
     },
-    "deleteAfterDays": 90,
-    "enforceInventory": true,
-    "id": "6895f9199cdf34225e1e6ff5",
     "lineItems": [
       {
         "sku": "sku1",
-        "quantity": 1,
-        "productId": "product-1",
-        "productName": "Nike Men's Pacific Shoes",
+        "quantity": 2,
         "skuOptions": {
           "color": "Blue",
           "size": "7"
         },
+        "properties": {
+          "productId": "product-1",
+          "title": "Nike Men's Pacific Shoes",
+          "handle": "nike-mens-pacific-shoes",
+          "featureImage": "/images/sku1--0.png"
+        },
         "type": "U",
-        "id": "i5muqsQM",
+        "id": "h8tduTDg",
         "price": {
           "purchasePrice": 1000,
           "originalPrice": 1000,
-          "totalPurchasePrice": 1000,
-          "totalOriginalPrice": 1000,
-          "lineItemSubtotal": 1000,
-          "lineItemTotal": 1000
+          "totalPurchasePrice": 2000,
+          "totalOriginalPrice": 2000,
+          "lineItemSubtotal": 1800,
+          "lineItemTotal": 1800
         },
-        "lastAvailabilityCheck": "2025-08-08T13:26:20.247Z",
+        "lastAvailabilityCheck": "2025-08-11T14:03:42.108Z",
         "itemDiscounts": {
-          "discounts": [],
-          "total": 0
+          "discounts": [
+            {
+              "id": "688cd4538d61472245ea7e0f",
+              "amount": 200,
+              "name": "lineDiscount",
+              "description": "Buy 2 sku1 and get 10% (Only for the first 2)"
+            }
+          ],
+          "total": 200
         },
         "itemTaxes": {
           "total": 0
@@ -45,14 +60,18 @@
       {
         "sku": "sku3",
         "quantity": 3,
-        "productId": "product-2",
-        "productName": "Reebok Men's Classic Nylon Shoes",
         "skuOptions": {
           "color": "Red",
           "size": "12"
         },
+        "properties": {
+          "productId": "product-2",
+          "title": "Reebok Men's Classic Nylon Shoes",
+          "handle": "reebok-mens-classic-nylon-shoes",
+          "featureImage": "/images/sku3--0.png"
+        },
         "type": "U",
-        "id": "C76uXqzY",
+        "id": "VLje0Nww",
         "price": {
           "purchasePrice": 5000,
           "originalPrice": 5000,
@@ -61,7 +80,7 @@
           "lineItemSubtotal": 15000,
           "lineItemTotal": 15000
         },
-        "lastAvailabilityCheck": "2025-08-08T13:27:13.234Z",
+        "lastAvailabilityCheck": "2025-08-11T14:04:08.550Z",
         "itemDiscounts": {
           "discounts": [],
           "total": 0
@@ -74,24 +93,28 @@
       },
       {
         "sku": "sku4",
-        "quantity": 4,
-        "productId": "product-2",
-        "productName": "Reebok Men's Classic Nylon Shoes",
+        "quantity": 5,
         "skuOptions": {
           "color": "Beige",
           "size": "9"
         },
+        "properties": {
+          "productId": "product-2",
+          "title": "Reebok Men's Classic Nylon Shoes",
+          "handle": "reebok-mens-classic-nylon-shoes",
+          "featureImage": "/images/sku4--0.png"
+        },
         "type": "U",
-        "id": "RFIpUvR8",
+        "id": "K8KOvEYt",
         "price": {
           "purchasePrice": 5000,
           "originalPrice": 5000,
-          "totalPurchasePrice": 20000,
-          "totalOriginalPrice": 20000,
-          "lineItemSubtotal": 20000,
-          "lineItemTotal": 20000
+          "totalPurchasePrice": 25000,
+          "totalOriginalPrice": 25000,
+          "lineItemSubtotal": 25000,
+          "lineItemTotal": 25000
         },
-        "lastAvailabilityCheck": "2025-08-08T13:27:31.115Z",
+        "lastAvailabilityCheck": "2025-08-11T14:04:15.852Z",
         "itemDiscounts": {
           "discounts": [],
           "total": 0
@@ -105,14 +128,18 @@
       {
         "sku": "sku5",
         "quantity": 1,
-        "productId": "product-2",
-        "productName": "Reebok Men's Classic Nylon Shoes",
         "skuOptions": {
           "color": "Beige",
           "size": "12"
         },
+        "properties": {
+          "productId": "product-2",
+          "title": "Reebok Men's Classic Nylon Shoes",
+          "handle": "reebok-mens-classic-nylon-shoes",
+          "featureImage": "/images/sku5--0.png"
+        },
         "type": "U",
-        "id": "UCrTgKfl",
+        "id": "gxDpEfaL",
         "price": {
           "purchasePrice": 5000,
           "originalPrice": 5000,
@@ -121,7 +148,41 @@
           "lineItemSubtotal": 5000,
           "lineItemTotal": 5000
         },
-        "lastAvailabilityCheck": "2025-08-08T13:27:58.758Z",
+        "lastAvailabilityCheck": "2025-08-11T14:04:20.391Z",
+        "itemDiscounts": {
+          "discounts": [],
+          "total": 0
+        },
+        "itemTaxes": {
+          "total": 0
+        },
+        "shippingDetails": [],
+        "state": "A"
+      },
+      {
+        "sku": "sku2",
+        "quantity": 1,
+        "skuOptions": {
+          "color": "Red",
+          "size": "9"
+        },
+        "properties": {
+          "productId": "product-2",
+          "title": "Reebok Men's Classic Nylon Shoes",
+          "handle": "reebok-mens-classic-nylon-shoes",
+          "featureImage": "/images/sku2--0.png"
+        },
+        "type": "U",
+        "id": "qq7mqhgG",
+        "price": {
+          "purchasePrice": 5000,
+          "originalPrice": 5000,
+          "totalPurchasePrice": 5000,
+          "totalOriginalPrice": 5000,
+          "lineItemSubtotal": 5000,
+          "lineItemTotal": 5000
+        },
+        "lastAvailabilityCheck": "2025-08-11T14:10:03.479Z",
         "itemDiscounts": {
           "discounts": [],
           "total": 0
@@ -142,7 +203,7 @@
           "lineItemTotal": 0
         },
         "type": "P",
-        "id": "P7k68ROn",
+        "id": "5obiyBpx",
         "itemDiscounts": {
           "discounts": [],
           "total": 0
@@ -154,31 +215,27 @@
         "state": "A"
       }
     ],
+    "shippingAddresses": [],
+    "shippingGroups": [],
     "orderDiscounts": {
       "discounts": [],
       "total": 0
     },
-    "origin": "C",
-    "pricingSummary": {
-      "grandTotal": 41000,
-      "subtotal": 41000,
-      "totalDiscounts": 0,
-      "totalItemDiscount": 0,
-      "totalLineItemOriginalPrice": 41000,
-      "totalLineItemPurchasePrice": 41000,
-      "totalOrderDiscount": 0,
-      "totalShipping": 0,
-      "totalShippingDiscount": 0,
-      "totalTax": 0
-    },
-    "shippingAddresses": [],
-    "shippingGroups": [],
-    "shippingMode": "S",
-    "state": "A",
     "taxInfo": {
       "total": 0
     },
-    "version": 11
+    "pricingSummary": {
+      "totalLineItemPurchasePrice": 52000,
+      "totalLineItemOriginalPrice": 52000,
+      "totalItemDiscount": 200,
+      "totalShipping": 0,
+      "totalShippingDiscount": 0,
+      "totalOrderDiscount": 0,
+      "totalDiscounts": 200,
+      "totalTax": 0,
+      "subtotal": 51800,
+      "grandTotal": 51800
+    }
   },
   "status": []
 }
