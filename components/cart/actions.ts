@@ -6,6 +6,7 @@ import { addToCart, createCart, getCart /*, removeFromCart, updateCart*/ } from 
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { getShippingCosts } from '@/lib/shipping-api';
 
 export async function addItem(prevState: any, selectedVariantId: string | undefined) {
   if (!selectedVariantId) {
@@ -13,6 +14,33 @@ export async function addItem(prevState: any, selectedVariantId: string | undefi
   }
 
   try {
+    await getShippingCosts({
+        "items": [
+        {
+          "productId": "PROD123",
+          "sku": "SKU123",
+          "quantity": 1,
+          "price": 2599
+        },
+        {
+          "productId": "PROD456",
+          "sku": "SKU456",
+          "quantity": 2,
+          "price": 1000
+        }
+      ],
+      "shippingAddress": {
+        "street": "123 Main St",
+        "city": "Anytown",
+        "state": "CA",
+        "zip": "90210",
+        "country": "US"
+      },
+      "currency": "USD",
+      "channelKey": "ch11040",
+      "country": "US",
+      "shippingMethodId": "687fd23892cb3b54056e22c0"
+   });
     await addToCart([{ merchandiseId: selectedVariantId, quantity: 1 }]);
     revalidateTag(TAGS.cart);
   } catch (e) {
