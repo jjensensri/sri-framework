@@ -1,0 +1,15 @@
+@import '@styles/variables';
+@import 'bootstrap/scss/mixins/breakpoints';
+
+.edit-item-quantity-button {
+  display: flex;
+  color: black;
+  font-size: 24px;
+  border: none;
+  background: none;
+  padding: 4px;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}

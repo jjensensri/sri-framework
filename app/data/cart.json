@@ -27,7 +27,7 @@
           "productId": "product-1",
           "title": "Nike Men's Pacific Shoes",
           "handle": "nike-mens-pacific-shoes",
-          "featureImage": "/images/sku1--0.png"
+          "featuredImage": "/images/sku1--0.png"
         },
         "type": "U",
         "id": "h8tduTDg",
@@ -68,7 +68,7 @@
           "productId": "product-2",
           "title": "Reebok Men's Classic Nylon Shoes",
           "handle": "reebok-mens-classic-nylon-shoes",
-          "featureImage": "/images/sku3--0.png"
+          "featuredImage": "/images/sku3--0.png"
         },
         "type": "U",
         "id": "VLje0Nww",
@@ -102,7 +102,7 @@
           "productId": "product-2",
           "title": "Reebok Men's Classic Nylon Shoes",
           "handle": "reebok-mens-classic-nylon-shoes",
-          "featureImage": "/images/sku4--0.png"
+          "featuredImage": "/images/sku4--0.png"
         },
         "type": "U",
         "id": "K8KOvEYt",
@@ -136,7 +136,7 @@
           "productId": "product-2",
           "title": "Reebok Men's Classic Nylon Shoes",
           "handle": "reebok-mens-classic-nylon-shoes",
-          "featureImage": "/images/sku5--0.png"
+          "featuredImage": "/images/sku5--0.png"
         },
         "type": "U",
         "id": "gxDpEfaL",
@@ -170,7 +170,7 @@
           "productId": "product-2",
           "title": "Reebok Men's Classic Nylon Shoes",
           "handle": "reebok-mens-classic-nylon-shoes",
-          "featureImage": "/images/sku2--0.png"
+          "featuredImage": "/images/sku2--0.png"
         },
         "type": "U",
         "id": "qq7mqhgG",

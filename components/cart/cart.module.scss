@@ -1,20 +1,155 @@
 @import '@styles/variables';
 @import 'bootstrap/scss/mixins/breakpoints';
 
-.side-cart {
-}
-
 .side-cart-toggle {
   color: var(--bs-btn-hover-color);
   border: none;
   display: flex;
   flex-direction: column-reverse;
-  padding-top: 9px;
-  padding-bottom: 9px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   height: 50px;
 
   .cart-quantity {
     font-size: 12px;
-    margin-bottom: -2px;
+    margin-bottom: -4px;
   }
+}
+
+.side-cart-header {
+  box-shadow: $box-shadow-sm-light;
+  z-index: 1;
+}
+
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 48px;
+
+  svg {
+    font-size: 20px;
+  }
+}
+
+.side-cart-body {
+  background-color: $almost-white;
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 4px auto;
+}
+
+.cart-item {
+  position: relative;
+  background: $white;
+  border-radius: $border-radius-sm;
+  box-shadow: $box-shadow-sm;
+  overflow: hidden;
+  padding: 12px;
+}
+
+.edit-item-quantity-form {
+  border-radius: $border-radius;
+  border: 1px solid $ada-grey;
+}
+
+.cart-item-info {
+  display: flex;
+  gap: 12px;
+}
+
+.product-name {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 2px;
+  text-decoration: none;
+}
+
+.sku-detail {
+  font-size: 13px;
+  margin: 0;
+  color: $almost-black;
+
+  .label {
+    text-transform: capitalize;
+    font-weight: 700;
+  }
+}
+
+.cart-item-price {
+  margin-left: auto;
+}
+
+.cart-item-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 76px;
+  margin-top: 8px;
+}
+
+.cart-item-quantity {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: $border-radius-sm;
+  border: 1px solid $light-grey;
+
+  span {
+    margin: 0 2px;
+  }
+}
+
+.cart-summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+
+  &.discount {
+    color: $green;
+
+    .amount {
+      font-weight: 700;
+    }
+  }
+  .label {
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .amount {
+    font-size: 15px;
+  }
+  &.total {
+    .label,
+    .amount {
+      font-size: 20px !important;
+    }
+  }
+}
+
+.side-cart-footer {
+  box-shadow: $box-shadow-top-light;
+  padding: 16px;
+  z-index: 1;
+
+  .note {
+    font-size: 12px;
+    font-style: italic;
+    color: $ada-grey;
+    margin-top: 16px;
+    text-align: center;
+  }
+}
+
+.cart-button {
+  width: 100%;
 }

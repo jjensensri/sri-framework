@@ -25,20 +25,24 @@ $container-max-widths: (
 );
 
 // colors
-$blue: #112d53;
+$blue: #0d5bcd;
+$navy-blue: #112d53;
 $light-blue: #8fbdef;
 $red: #dd1a26;
 $red-on-blue-ada: lighten($red, 19);
 $red-hover-bg: #bc1620;
 $red-hover-outline: #b1151e;
+$green: #2a8703;
 $black: #000;
 $almost-black: #0a0d15;
 $white: #fff;
 $almost-white: #fafafa;
 $vapor: #e7e7e7;
+$light-grey: #ccc;
 $ada-grey: #767676;
 
 $colors: (
+  'primary': $blue,
   'blue': $blue,
   'red': $red,
 );
@@ -47,6 +51,8 @@ $focus-ring-color: $light-blue;
 // box-shadows
 $box-shadow: 0 0.5rem 1rem rgba($black, 0.1);
 $box-shadow-sm: 0 0.125rem 0.25rem rgba($black, 0.075);
+$box-shadow-sm-light: 0 0.125rem 0.25rem rgba($black, 0.05);
+$box-shadow-top-light: 0 -0.125rem 0.25rem rgba($black, 0.05);
 $box-shadow-lg: 0 1rem 3rem rgba($black, 0.175);
 $box-shadow-inset: inset 0 1px 2px rgba($black, 0.075);
 

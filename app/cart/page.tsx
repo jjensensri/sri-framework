@@ -119,7 +119,6 @@
 //               <div className="mb-3 flex items-center justify-between  border-neutral-200 pb-1 dark:border-neutral-700">
 //                 <p>Taxes</p>
 //                 <Price
-//                   className="text-right text-base text-black dark:text-white"
 //                   amount={cart.cost.totalTaxAmount.amount}
 //                   currencyCode={cart.cost.totalTaxAmount.currencyCode}
 //                 />
@@ -131,7 +130,6 @@
 //               <div className=" flex items-center justify-between  border-neutral-200 pb-1 pt-1 dark:border-neutral-700">
 //                 <p>Total</p>
 //                 <Price
-//                   className="text-right text-base text-black dark:text-white"
 //                   amount={cart.cost.totalAmount.amount}
 //                   currencyCode={cart.cost.totalAmount.currencyCode}
 //                 />

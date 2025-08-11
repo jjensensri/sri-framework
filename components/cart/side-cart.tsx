@@ -1,18 +1,18 @@
 'use client';
 
-import { BsBag, BsCart } from 'react-icons/bs';
-import Price from '@components/price';
+import { BsCart2 } from 'react-icons/bs';
+import { Price } from '@components/price';
 import { createUrl } from '@lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { useFormStatus } from 'react-dom';
 import { createCartAndSetCookie, redirectToCheckout } from './actions';
 import { useCart } from './cart-context';
 import { DeleteItemButton } from './delete-item-button';
 import { EditItemQuantityButton } from './edit-item-quantity-button';
 import { Button, Offcanvas, OffcanvasBody, OffcanvasHeader, OffcanvasTitle } from 'react-bootstrap';
 import styles from './cart.module.scss';
+import clsx from 'clsx';
 
 export default function SideCart() {
   const { cart, cartQuantity } = useCart();
@@ -26,8 +26,6 @@ export default function SideCart() {
       createCartAndSetCookie();
     }
   }, [cart]);
-
-  useEffect(() => {}, []);
 
   // useEffect(() => {
   //   if (
@@ -43,124 +41,151 @@ export default function SideCart() {
   // }, [isOpen, cart?.totalQuantity, quantityRef]);
 
   return (
-    <div className={styles['side-cart']}>
+    <div>
       <Button className={styles['side-cart-toggle']} variant={'outline-light'} onClick={openCart}>
-        <BsCart />
-        {cartQuantity ? <div className={styles['cart-quantity']}>{cartQuantity}</div> : null}
+        <BsCart2 />
+        <div className={styles['cart-quantity']}>{cartQuantity}</div>
       </Button>
 
       <Offcanvas show={isCartOpen} onHide={closeCart} placement={'end'}>
-        <OffcanvasHeader closeButton>
-          <OffcanvasTitle>Bag</OffcanvasTitle>
+        <OffcanvasHeader className={styles['side-cart-header']} closeButton>
+          <OffcanvasTitle>My Cart ({cartQuantity})</OffcanvasTitle>
         </OffcanvasHeader>
-        <OffcanvasBody>
+        <OffcanvasBody className={styles['side-cart-body']}>
           {!cart || cart.lineItems.length === 0 ? (
-            <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
-              <BsBag />
-              <p className="mt-6 text-center text-2xl font-bold">Your cart is empty.</p>
+            <div className={styles['empty-cart']}>
+              <BsCart2 />
+              <p>Your cart is empty.</p>
             </div>
           ) : (
-            <div className="flex h-full flex-col justify-between overflow-visible">
-              <ul className="grow py-4">
+            <div className={styles['cart-body']}>
+              <ul className={styles['cart-items']}>
                 {cart.lineItems.map((item, i) => {
                   const merchandiseUrl = createUrl(
-                    `/product/${item.handle}`,
+                    `/product/${item?.properties?.handle}`,
                     new URLSearchParams(item?.skuOptions)
                   );
+                  const keys = Object.keys(item?.skuOptions || {});
+                  const values = Object.values(item?.skuOptions || {});
 
                   return (
-                    <li
-                      key={i}
-                      className="flex w-full flex-col border-b border-neutral-300 dark:border-neutral-700"
-                    >
-                      <div className="relative flex w-full flex-row justify-between px-0 py-4">
-                        <div className="absolute z-40 -ml-2 -mt-2">
-                          <DeleteItemButton item={item} type={`x`} />
-                        </div>
-                        <div className="flex flex-row">
-                          <div className="relative h-16 w-16 overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800">
-                            <Image
-                              className="h-full w-full object-cover"
-                              width={64}
-                              height={64}
-                              alt={item.productName || ''}
-                              src={item.featuredImage || ''}
-                            />
-                          </div>
+                    <li key={i} className={styles['cart-item']}>
+                      <div className={styles['cart-item-info']}>
+                        <Link href={merchandiseUrl} onClick={closeCart}>
+                          <Image
+                            width={64}
+                            height={64}
+                            alt={item.properties?.title || item.productName || ''}
+                            src={item.properties?.featuredImage || '/images/no-image.png'}
+                          />
+                        </Link>
+                        <div>
                           <Link
                             href={merchandiseUrl}
                             onClick={closeCart}
-                            className="z-30 ml-2 flex flex-row space-x-4"
+                            className={styles['product-name']}
                           >
-                            <div className="flex flex-1 flex-col text-base">
-                              <span className="leading-tight">{item.productName}</span>
-                              <p className="text-sm text-neutral-500 dark:text-neutral-400">
-                                {item.productName}
-                              </p>
-                            </div>
+                            {item?.properties?.title || item.productName}
                           </Link>
+                          {keys &&
+                            keys.map((option, index) => {
+                              return (
+                                <p className={styles['sku-detail']}>
+                                  <span className={styles.label}>{option}</span>: {values[index]}
+                                </p>
+                              );
+                            })}
                         </div>
-                        <div className="flex h-16 flex-col justify-between">
-                          <Price
-                            className="flex justify-end space-y-2 text-right text-sm"
-                            amount={item.price.purchasePrice}
-                            currencyCode={cart.currency}
-                          />
-                          <div className="ml-auto flex h-9 flex-row items-center rounded-full border border-neutral-200 dark:border-neutral-700">
-                            <EditItemQuantityButton item={item} type="minus" />
-                            <p className="w-6 text-center">
-                              <span className="w-full text-sm">{item.quantity}</span>
-                            </p>
-                            <EditItemQuantityButton item={item} type="plus" />
-                          </div>
+                        <div className={styles['cart-item-price']}>
+                          {item?.itemDiscounts && item?.itemDiscounts?.total > 0 ? (
+                            <Price
+                              amount={item.price.lineItemTotal}
+                              originalAmount={item.price.totalPurchasePrice}
+                              currencyCode={cart.currency}
+                            />
+                          ) : (
+                            <Price
+                              amount={item.price.totalPurchasePrice}
+                              currencyCode={cart.currency}
+                            />
+                          )}
+                        </div>
+                      </div>
+                      <div className={styles['cart-item-actions']}>
+                        <DeleteItemButton item={item} />
+                        <div className={styles['cart-item-quantity']}>
+                          <EditItemQuantityButton item={item} type="minus" />
+                          <span>{item.quantity}</span>
+                          <EditItemQuantityButton item={item} type="plus" />
                         </div>
                       </div>
                     </li>
                   );
                 })}
               </ul>
-              <div className="py-4 text-sm text-neutral-500 dark:text-neutral-400">
-                <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 dark:border-neutral-700">
-                  <p>Taxes</p>
-                  <Price
-                    className="text-right text-base text-black dark:text-white"
-                    amount={cart.pricingSummary.totalTax}
-                    currencyCode={cart.currency}
-                  />
-                </div>
-                <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1 dark:border-neutral-700">
-                  <p>Shipping</p>
-                  <p className="text-right">Calculated at checkout</p>
-                </div>
-                <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1 dark:border-neutral-700">
-                  <p>Total</p>
-                  <Price
-                    className="text-right text-base text-black dark:text-white"
-                    amount={cart.pricingSummary.grandTotal}
-                    currencyCode={cart.currency}
-                  />
-                </div>
-              </div>
-              <form action={redirectToCheckout}>
-                <CheckoutButton />
-              </form>
             </div>
           )}
         </OffcanvasBody>
+        {cart && cart.lineItems.length > 0 && (
+          <div className={styles['side-cart-footer']}>
+            <div className={styles['cart-summary']}>
+              <div className={styles['cart-summary-item']}>
+                <span className={styles.label}>Subtotal</span>
+                <span className={styles.amount}>
+                  {cart?.pricingSummary?.subtotal ? (
+                    <Price amount={cart.pricingSummary.subtotal} currencyCode={cart.currency} />
+                  ) : (
+                    'Calculated at checkout'
+                  )}
+                </span>
+              </div>
+              {cart.pricingSummary.totalDiscounts && (
+                <div className={clsx(styles['cart-summary-item'], styles['discount'])}>
+                  <span className={styles.label}>Discounts</span>
+                  <span className={styles.amount}>
+                    <Price
+                      amount={cart.pricingSummary.totalDiscounts * -1}
+                      currencyCode={cart.currency}
+                    />
+                  </span>
+                </div>
+              )}
+              {Boolean(cart?.pricingSummary?.totalTax) && (
+                <div className={styles['cart-summary-item']}>
+                  <span className={styles.label}>Taxes</span>
+                  <span className={styles.amount}>
+                    <Price amount={cart.pricingSummary.totalTax} currencyCode={cart.currency} />
+                  </span>
+                </div>
+              )}
+              {Boolean(cart?.pricingSummary?.totalShipping) && (
+                <div className={styles['cart-summary-item']}>
+                  <span className={styles.label}>Shipping</span>
+                  <span className={styles.amount}>Calculated at checkout</span>
+                </div>
+              )}
+              <div className={clsx(styles['cart-summary-item'], styles['total'])}>
+                <span className={styles.label}>Estimated Total</span>
+                <span className={styles.amount}>
+                  {cart?.pricingSummary?.grandTotal ? (
+                    <Price amount={cart.pricingSummary.grandTotal} currencyCode={cart.currency} />
+                  ) : (
+                    'Calculated at checkout'
+                  )}
+                </span>
+              </div>
+            </div>
+            <p className={styles.note}>Shipping & Taxes are calculated at checkout</p>
+            <Button
+              variant={'primary'}
+              href="/cart"
+              className={clsx(styles['cart-button'], 'rounded-pill')}
+            >
+              {'Cart'}
+            </Button>
+          </div>
+        )}
       </Offcanvas>
     </div>
-  );
-}
-
-function CheckoutButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <a
-      href="/cart"
-      className="block w-full rounded-full bg-blue-600 p-3 text-center text-sm font-medium text-white opacity-90 hover:opacity-100"
-    >
-      {'Cart'}
-    </a>
   );
 }

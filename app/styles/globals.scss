@@ -21,11 +21,10 @@ main {
 }
 
 a {
-  color: $red;
+  color: $blue;
 
   &:hover {
     opacity: 0.8;
-    color: $red-hover-bg;
   }
 }
 
@@ -52,4 +51,9 @@ a {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+}
+
+// offcanvas
+.offcanvas.offcanvas-end {
+  border: none;
 }

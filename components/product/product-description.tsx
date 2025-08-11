@@ -1,5 +1,5 @@
 import { AddToCart } from '@components/cart/add-to-cart';
-import Price from '@components/price';
+import { Price } from '@components/price';
 import { Product } from '@lib/catalog-api/types';
 import { VariantSelector } from './variant-selector';
 

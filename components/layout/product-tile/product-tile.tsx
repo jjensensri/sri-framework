@@ -1,4 +1,4 @@
-import Price from '@components/price';
+import { Price } from '@components/price';
 import styles from './product-tile.module.scss';
 import { Card, CardBody, CardText, CardTitle } from 'react-bootstrap';
 import { Product } from '@lib/catalog-api/types';
