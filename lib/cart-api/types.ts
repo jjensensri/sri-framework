@@ -32,6 +32,8 @@ export type ShippingDetailsSchema = {
 
 export type LineItem = {
   categories?: string[];
+  featuredImage?: string;
+  handle?: string;
   id: string;
   itemDiscounts: DiscountsInfoSchema;
   itemTaxes: {

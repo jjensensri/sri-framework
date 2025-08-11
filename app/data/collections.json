@@ -28,11 +28,11 @@
         ],
         "priceRange": {
           "maxVariantPrice": {
-            "amount": "50.0",
+            "amount": 5000,
             "currencyCode": "USD"
           },
           "minVariantPrice": {
-            "amount": "50.0",
+            "amount": 5000,
             "currencyCode": "USD"
           }
         },
@@ -102,7 +102,7 @@
               }
             ],
             "price": {
-              "amount": "50.0",
+              "amount": 5000,
               "currencyCode": "USD"
             }
           },
@@ -121,7 +121,7 @@
               }
             ],
             "price": {
-              "amount": "50.0",
+              "amount": 5000,
               "currencyCode": "USD"
             }
           },
@@ -140,7 +140,7 @@
               }
             ],
             "price": {
-              "amount": "50.0",
+              "amount": 5000,
               "currencyCode": "USD"
             }
           },
@@ -159,7 +159,7 @@
               }
             ],
             "price": {
-              "amount": "50.0",
+              "amount": 5000,
               "currencyCode": "USD"
             }
           }
@@ -185,11 +185,11 @@
         ],
         "priceRange": {
           "maxVariantPrice": {
-            "amount": "10.0",
+            "amount": 1000,
             "currencyCode": "USD"
           },
           "minVariantPrice": {
-            "amount": "10.0",
+            "amount": 1000,
             "currencyCode": "USD"
           }
         },
@@ -241,7 +241,7 @@
               }
             ],
             "price": {
-              "amount": "10.0",
+              "amount": 1000,
               "currencyCode": "USD"
             }
           }
@@ -278,11 +278,11 @@
         ],
         "priceRange": {
           "maxVariantPrice": {
-            "amount": "50.0",
+            "amount": 5000,
             "currencyCode": "USD"
           },
           "minVariantPrice": {
-            "amount": "50.0",
+            "amount": 5000,
             "currencyCode": "USD"
           }
         },
@@ -352,7 +352,7 @@
               }
             ],
             "price": {
-              "amount": "50.0",
+              "amount": 5000,
               "currencyCode": "USD"
             }
           },
@@ -371,7 +371,7 @@
               }
             ],
             "price": {
-              "amount": "50.0",
+              "amount": 5000,
               "currencyCode": "USD"
             }
           },
@@ -390,7 +390,7 @@
               }
             ],
             "price": {
-              "amount": "50.0",
+              "amount": 5000,
               "currencyCode": "USD"
             }
           },
@@ -409,7 +409,7 @@
               }
             ],
             "price": {
-              "amount": "50.0",
+              "amount": 5000,
               "currencyCode": "USD"
             }
           }
@@ -446,11 +446,11 @@
         ],
         "priceRange": {
           "maxVariantPrice": {
-            "amount": "10.0",
+            "amount": 1000,
             "currencyCode": "USD"
           },
           "minVariantPrice": {
-            "amount": "10.0",
+            "amount": 1000,
             "currencyCode": "USD"
           }
         },
@@ -502,7 +502,7 @@
               }
             ],
             "price": {
-              "amount": "10.0",
+              "amount": 1000,
               "currencyCode": "USD"
             }
           }

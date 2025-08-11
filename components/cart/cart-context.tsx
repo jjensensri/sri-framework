@@ -2,6 +2,7 @@
 
 import type { Cart } from '@lib/cart-api/types';
 import React, { createContext, use, useContext } from 'react';
+import { getProductBySku } from '@lib/catalog-api';
 
 type CartContextType = {
   cartPromise: Promise<Cart | undefined>;
@@ -24,6 +25,17 @@ export function useCart() {
   if (context === undefined) {
     throw new Error('useCart must be used within a CartProvider');
   }
+
+  const cart = use(context.cartPromise);
+  cart?.lineItems.map(async (item, i) => {
+    const product = await getProductBySku(item?.sku.toLowerCase() || '');
+    if (!product) {
+      return;
+    }
+    item.handle = product.handle;
+    item.featuredImage = product.featuredImage.url;
+    item.productName = product.title;
+  });
 
   return {
     cart: use(context.cartPromise),

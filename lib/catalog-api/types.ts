@@ -9,7 +9,7 @@ export type Image = {
 };
 
 export type Price = {
-  amount: string;
+  amount: number;
   currencyCode: string;
 };
 

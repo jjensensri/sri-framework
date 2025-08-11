@@ -25,8 +25,6 @@ export const ProductCarousel = async ({
     ${perSlide?.xs ? 100 / perSlide?.xs : '100'}vw
   `;
 
-  console.log('carouselProducts', carouselProducts);
-
   return (
     <section className={styles['product-carousel']}>
       <div className={styles['product-carousel-wrapper']}>

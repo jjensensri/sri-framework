@@ -19,8 +19,6 @@ export const ProductGrid = async ({
     ${perRow?.xs ? 100 / perRow?.xs : '100'}vw
   `;
 
-  console.log('products: ', products);
-
   return (
     <section className={`${styles['product-grid']} product-grid`}>
       <Container>

@@ -9,6 +9,14 @@ export async function getProduct(handle: string): Promise<Product | undefined> {
   return products.find((product) => product.handle === handle);
 }
 
+export async function getProductById(productId: string): Promise<Product | undefined> {
+  return products.find((product) => product.id === productId);
+}
+
+export async function getProductBySku(sku: string): Promise<Product | undefined> {
+  return products.find((product) => product.variants.find((variant) => variant.id === sku));
+}
+
 export async function getProductRecommendations(productId: string): Promise<Product[]> {
   return products;
 }

@@ -1,5 +1,87 @@
 [
   {
+    "id": "product-1",
+    "handle": "nike-shoe-blue-7",
+    "availableForSale": true,
+    "title": "Nike Men's Pacific Shoes",
+    "description": "Throw it back to the 1970's with the Nike Men's Pacific Shoes. The single piece injected midsoles promote flexibility, while the herringbone outsoles and flex gloves provide lasting comfort. The wide collar openings and puffed Swoosh logos deliver a retro look.",
+    "options": [
+      {
+        "id": "10440377335945",
+        "name": "Size",
+        "values": ["7"]
+      },
+      {
+        "id": "10440377368713",
+        "name": "Color",
+        "values": ["Blue"]
+      }
+    ],
+    "priceRange": {
+      "maxVariantPrice": {
+        "amount": 1000,
+        "currencyCode": "USD"
+      },
+      "minVariantPrice": {
+        "amount": 1000,
+        "currencyCode": "USD"
+      }
+    },
+    "featuredImage": {
+      "url": "/images/sku1--0.png",
+      "altText": "Navy blue and white sneaker with a prominent Nike logo on a white background",
+      "width": 1320,
+      "height": 1320
+    },
+    "seo": {
+      "description": null,
+      "title": null
+    },
+    "tags": [],
+    "updatedAt": "2025-08-05T02:42:00Z",
+    "images": [
+      {
+        "url": "/images/sku1--0.png",
+        "altText": "Navy blue and white sneaker with a prominent Nike logo on a white background",
+        "width": 1320,
+        "height": 1320
+      },
+      {
+        "url": "/images/sku1--1.png",
+        "altText": "Pair of navy blue and white sneakers with a visible Nike logo on a white background",
+        "width": 1320,
+        "height": 1320
+      },
+      {
+        "url": "/images/sku1--2.png",
+        "altText": "Pair of blue and white sneakers with Nike logo on a white background",
+        "width": 1320,
+        "height": 1320
+      }
+    ],
+    "variants": [
+      {
+        "id": "sku1",
+        "title": "7 / Blue",
+        "availableForSale": true,
+        "selectedOptions": [
+          {
+            "name": "Size",
+            "value": "7"
+          },
+          {
+            "name": "Color",
+            "value": "Blue"
+          }
+        ],
+        "price": {
+          "amount": 1000,
+          "currencyCode": "USD"
+        }
+      }
+    ]
+  },
+  {
     "id": "product-2",
     "handle": "reebok-mens-classic-nylon-shoes",
     "availableForSale": true,
@@ -19,11 +101,11 @@
     ],
     "priceRange": {
       "maxVariantPrice": {
-        "amount": "50.0",
+        "amount": 5000,
         "currencyCode": "USD"
       },
       "minVariantPrice": {
-        "amount": "50.0",
+        "amount": 5000,
         "currencyCode": "USD"
       }
     },
@@ -93,7 +175,7 @@
           }
         ],
         "price": {
-          "amount": "50.0",
+          "amount": 5000,
           "currencyCode": "USD"
         }
       },
@@ -112,7 +194,7 @@
           }
         ],
         "price": {
-          "amount": "50.0",
+          "amount": 5000,
           "currencyCode": "USD"
         }
       },
@@ -131,7 +213,7 @@
           }
         ],
         "price": {
-          "amount": "50.0",
+          "amount": 5000,
           "currencyCode": "USD"
         }
       },
@@ -150,89 +232,57 @@
           }
         ],
         "price": {
-          "amount": "50.0",
+          "amount": 5000,
           "currencyCode": "USD"
         }
       }
     ]
   },
   {
-    "id": "product-1",
-    "handle": "nike-shoe-blue-7",
+    "id": "free-bag",
+    "handle": "free-bag",
     "availableForSale": true,
-    "title": "Nike Men's Pacific Shoes",
-    "description": "Throw it back to the 1970's with the Nike Men's Pacific Shoes. The single piece injected midsoles promote flexibility, while the herringbone outsoles and flex gloves provide lasting comfort. The wide collar openings and puffed Swoosh logos deliver a retro look.",
-    "options": [
-      {
-        "id": "10440377335945",
-        "name": "Size",
-        "values": ["7"]
-      },
-      {
-        "id": "10440377368713",
-        "name": "Color",
-        "values": ["Blue"]
-      }
-    ],
+    "title": "Free Bag",
+    "description": "Free adidas Alliance II Sackpack with Purchase of Nike Men's Pacific Shoes Blue / 7",
+    "options": [],
     "priceRange": {
       "maxVariantPrice": {
-        "amount": "10.0",
+        "amount": 0,
         "currencyCode": "USD"
       },
       "minVariantPrice": {
-        "amount": "10.0",
+        "amount": 0,
         "currencyCode": "USD"
       }
     },
     "featuredImage": {
-      "url": "/images/sku1--0.png",
-      "altText": "Navy blue and white sneaker with a prominent Nike logo on a white background",
-      "width": 1320,
-      "height": 1320
+      "url": "/images/free-bag.png",
+      "altText": "adidas Alliance II Sackpack",
+      "width": 1500,
+      "height": 1500
     },
     "seo": {
-      "description": null,
-      "title": null
+      "description": "Free adidas Alliance II Sackpack with Purchase of Nike Men's Pacific Shoes Blue / 7",
+      "title": "adidas Alliance II Sackpack"
     },
     "tags": [],
     "updatedAt": "2025-08-05T02:42:00Z",
     "images": [
       {
-        "url": "/images/sku1--0.png",
-        "altText": "Navy blue and white sneaker with a prominent Nike logo on a white background",
-        "width": 1320,
-        "height": 1320
-      },
-      {
-        "url": "/images/sku1--1.png",
-        "altText": "Pair of navy blue and white sneakers with a visible Nike logo on a white background",
-        "width": 1320,
-        "height": 1320
-      },
-      {
-        "url": "/images/sku1--2.png",
-        "altText": "Pair of blue and white sneakers with Nike logo on a white background",
-        "width": 1320,
-        "height": 1320
+        "url": "/images/free-bag.png",
+        "altText": "adidas Alliance II Sackpack",
+        "width": 1500,
+        "height": 1500
       }
     ],
     "variants": [
       {
-        "id": "sku1",
-        "title": "7 / Blue",
+        "id": "free-bag",
+        "title": "adidas Alliance II Sackpack",
         "availableForSale": true,
-        "selectedOptions": [
-          {
-            "name": "Size",
-            "value": "7"
-          },
-          {
-            "name": "Color",
-            "value": "Blue"
-          }
-        ],
+        "selectedOptions": [],
         "price": {
-          "amount": "10.0",
+          "amount": 0,
           "currencyCode": "USD"
         }
       }
