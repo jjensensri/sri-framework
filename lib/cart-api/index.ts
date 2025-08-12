@@ -46,7 +46,6 @@ export async function cartApiFetch<T>({
 
     if (result.status === 401) {
       // fetch new access token
-      console.log('go get new access token');
       await fetchAccessToken();
     }
 
@@ -109,7 +108,6 @@ export async function getCart(): Promise<Cart | undefined> {
     endpoint: `/admin/carts/${channelKey}/carts/${cartId}`,
   });
 
-  // Old carts becomes `null` when you checkout.
   if (!res.body) {
     return undefined;
   }
@@ -118,19 +116,28 @@ export async function getCart(): Promise<Cart | undefined> {
 }
 
 export async function createCart(): Promise<Cart> {
-  return cart.cart;
-  // todo: zach
+  let res = await cartApiFetch({
+    endpoint: `/admin/carts/${channelKey}/carts`,
+    method: 'POST',
+    payload: {
+      origin: 'C',
+      enforceInventory: true,
+    },
+  });
 
-  // const res = await cartApiFetch({
-  //   endpoint: `/admin/carts/${channelKey}/carts`,
-  //   method: 'POST',
-  //   payload: {
-  //     origin: 'C',
-  //     enforceInventory: true,
-  //   },
-  // });
-  //
-  // return res.body as Cart;
+  if (res.status === 401) {
+    // there was a stale access token, it should be refreshed so try again once
+    res = await cartApiFetch({
+      endpoint: `/admin/carts/${channelKey}/carts`,
+      method: 'POST',
+      payload: {
+        origin: 'C',
+        enforceInventory: true,
+      },
+    });
+  }
+
+  return res.body as Cart;
 }
 
 export async function addToCart(skuId: string, quantity: number): Promise<Cart> {
