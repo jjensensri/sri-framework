@@ -5,6 +5,10 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+
+	:global(.card-title) & {
+		align-items: flex-start;
+	}
 }
 
 .sale-price {

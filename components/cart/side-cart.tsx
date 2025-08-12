@@ -90,7 +90,7 @@ export default function SideCart() {
                           {keys &&
                             keys.map((option, index) => {
                               return (
-                                <p className={styles['sku-detail']}>
+                                <p className={styles['sku-detail']} key={index}>
                                   <span className={styles.label}>{option}</span>: {values[index]}
                                 </p>
                               );
