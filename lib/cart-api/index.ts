@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import { AccessToken, Cart } from './types';
+import { AccessToken, Cart, CartResponse } from './types';
 
 const apiHost = process.env.API_HOST;
 const orgId = process.env.ORG_ID;
@@ -99,25 +99,22 @@ export async function fetchAccessToken(): Promise<string> {
 }
 
 export async function getCart(): Promise<Cart | undefined> {
-  return cart.cart;
-  // todo: zach
+  const cartId = (await cookies()).get('cart-id')?.value;
+  if (!cartId) {
+    return undefined;
+  }
 
-  // const cartId = (await cookies()).get('cart-id')?.value;
-  // if (!cartId) {
-  //   return undefined;
-  // }
-  //
-  // const res = await cartApiFetch({
-  //   method: 'GET',
-  //   endpoint: `/admin/carts/${channelKey}/carts/${cartId}`,
-  // });
-  //
-  // // Old carts becomes `null` when you checkout.
-  // if (!res.body) {
-  //   return undefined;
-  // }
-  //
-  // return res.body.cart as Cart;
+  const res = await cartApiFetch({
+    method: 'GET',
+    endpoint: `/admin/carts/${channelKey}/carts/${cartId}`,
+  });
+
+  // Old carts becomes `null` when you checkout.
+  if (!res.body) {
+    return undefined;
+  }
+
+  return (res.body as CartResponse).cart;
 }
 
 export async function createCart(): Promise<Cart> {

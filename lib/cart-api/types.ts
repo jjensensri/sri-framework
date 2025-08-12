@@ -106,3 +106,9 @@ export type Cart = {
   };
   version: number;
 };
+
+
+export type CartResponse = {
+  cart: Cart;
+  status: any[];
+};
