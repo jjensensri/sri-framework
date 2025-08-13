@@ -110,6 +110,12 @@ export async function redirectToCheckout() {
 }
 
 export async function createCartAndSetCookie() {
-  let cart = await createCart();
-  (await cookies()).set('cart-id', cart.id!);
+  const cartId = (await cookies()).get('cart-id')?.value;
+  if (cartId) {
+    await getCart();
+  } else {
+    let cart = await createCart();
+    (await cookies()).set('cart-id', cart.id!);
+    (await cookies()).set('cart-version', (cart.version || 0).toString());
+  }
 }

@@ -141,67 +141,65 @@ export async function createCart(): Promise<Cart> {
 }
 
 export async function addToCart(skuId: string, quantity: number): Promise<Cart> {
-  console.log('skuId: ', skuId);
-  console.log('quantity: ', quantity);
-  return cart.cart;
-  // todo: zach
+  try {
+    const cookieStore = await cookies();
+    const cartId = cookieStore.get('cart-id')?.value;
+    let cartVersion = Number(cookieStore.get('cart-version')?.value) || 0;
 
-  // try {
-  //   const cookieStore = await cookies();
-  //   const cartId = cookieStore.get('cart-id')?.value;
-  //   let cartVersion = Number(cookieStore.get('cart-version')?.value);
-  //
-  //   if (!cartId) {
-  //     throw new Error('Cart ID is missing from cookies.');
-  //   }
-  //   if (!cartVersion || isNaN(cartVersion)) {
-  //     // Doing this temporarily since the cookie doesn't exist yet
-  //     cartVersion = 1;
-  //   }
-  //
-  //   let addToCartRequest = {
-  //     endpoint: `/admin/carts/${channelKey}/carts/${cartId}/line-items?version=${cartVersion}`,
-  //     method: 'POST',
-  //     payload: {
-  //       sku: 'sku1',
-  //       productId: '001D',
-  //       productName: 'Shoes',
-  //       productType: 'physical',
-  //       skuName: 'Nike Shoe blue 7',
-  //       skuOptions: {
-  //         color: 'blue',
-  //         size: '7',
-  //       },
-  //     },
-  //   };
-  //
-  //   //TODO: Cart ID changed for me, need to figure out how to refresh my token without having to re-login/create a new cart
-  //   // if the cart ID changes, that's a problem.
-  //   const res = await cartApiFetch(addToCartRequest);
-  //   if (res.status === 404) {
-  //     // Add to cart failed to find, get the latest version to see
-  //     // if that was the reason
-  //     return await retryWithNewCartVersion(
-  //       addToCartRequest,
-  //       cartVersion,
-  //       (newVersion) =>
-  //         `/admin/carts/${channelKey}/carts/${cartId}/line-items?version=${newVersion}`
-  //     );
-  //   }
-  //
-  //   if (res.status >= 400) {
-  //     console.error(`Add to cart failed with status ${res.status}`, res.body);
-  //     throw new Error(`Add to cart failed: ${JSON.stringify(res.body)}`);
-  //   }
-  //   return res.body as Cart;
-  // } catch (err) {
-  //   console.error('Error adding to cart:', err);
-  //
-  //   // Optional: rethrow or return a safe fallback
-  //   throw new Error(
-  //     `Unable to add to cart. Reason: ${err instanceof Error ? err.message : 'Unknown error'}`
-  //   );
-  // }
+    if (!cartId) {
+      throw new Error('Cart ID is missing from cookies.');
+    }
+
+    let addToCartRequest = {
+      endpoint: `/admin/carts/${channelKey}/carts/${cartId}/line-items?version=${cartVersion}`,
+      method: 'POST',
+      payload: {
+        sku: skuId,
+        quantity: quantity,
+        // optional: pass in additional properties
+        // productId: '001D',
+        // productName: 'Shoes',
+        // productType: 'physical',
+        // skuName: 'Nike Shoe blue 7',
+        // skuOptions: {
+        //   color: 'blue',
+        //   size: '7',
+        // },
+      },
+    };
+
+    // TODO: Cart ID changed for me, need to figure out how to refresh my token without having to re-login/create a new cart
+    // if the cart ID changes, that's a problem.
+    const res = await cartApiFetch(addToCartRequest);
+    if (res.status === 404) {
+      // Add to cart failed to find, get the latest version to see if that was the reason
+      return await retryWithNewCartVersion(
+        addToCartRequest,
+        cartVersion,
+        (newVersion) =>
+          `/admin/carts/${channelKey}/carts/${cartId}/line-items?version=${newVersion}`
+      );
+    }
+
+    if (res.status >= 400) {
+      console.error(`Add to cart failed with status ${res.status}`, res.body);
+      throw new Error(`Add to cart failed: ${JSON.stringify(res.body)}`);
+    }
+
+    const cart = (res.body as CartResponse).cart;
+
+    // update cart version cookie
+    (await cookies()).set('cart-version', cart?.version?.toString());
+
+    return cart;
+  } catch (err) {
+    console.error('Error adding to cart:', err);
+
+    // Optional: rethrow or return a safe fallback
+    throw new Error(
+      `Unable to add to cart. Reason: ${err instanceof Error ? err.message : 'Unknown error'}`
+    );
+  }
 }
 
 export async function removeFromCart(lineItemId: string): Promise<Cart> {

@@ -26,18 +26,27 @@ export function useCart() {
     throw new Error('useCart must be used within a CartProvider');
   }
 
-  // todo: currently we're passing in custom properties to the addToCart call so we don't have to call the product catalog
-  // todo: if you want to use the product catalog, merge in the properties you want below
-  // const cart = use(context.cartPromise);
-  // cart?.lineItems.map(async (item, i) => {
-  //   const product = await getProductBySku(item?.sku.toLowerCase() || '');
-  //   if (!product) {
-  //     return;
-  //   }
-  //   item.handle = product.handle;
-  //   item.featuredImage = product.featuredImage.url;
-  //   item.productName = product.title;
-  // });
+  // todo: merge in the properties from the product catalog necessary to render the cart & side cart.
+  // todo: you can also pass in custom properties to the addToCart call so you don't have to call
+  //       the product catalog. you would have to update the addToCart call to accept these properties
+  const cart = use(context.cartPromise);
+  cart?.lineItems.map(async (item, i) => {
+    const sku = item?.sku.toLowerCase();
+    const product = await getProductBySku(sku);
+    if (!product) {
+      return;
+    }
+
+    item.handle = product.handle;
+    item.featuredImage = product.featuredImage.url;
+    item.productName = product.title;
+    item.skuOptions = {};
+
+    const variant = product.variants.find((i) => i.id === sku);
+    variant?.selectedOptions?.map((option) => {
+      item.skuOptions![option.name] = option.value;
+    });
+  });
 
   return {
     cart: use(context.cartPromise),

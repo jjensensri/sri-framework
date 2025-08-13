@@ -6,7 +6,7 @@ import { createUrl } from '@lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { createCartAndSetCookie, redirectToCheckout } from './actions';
+import { createCartAndSetCookie } from './actions';
 import { useCart } from './cart-context';
 import { DeleteItemButton } from './delete-item-button';
 import { EditItemQuantityButton } from './edit-item-quantity-button';
@@ -21,24 +21,25 @@ export default function SideCart() {
   const openCart = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
 
+  // todo: if you restart your server, the cart is null, but if you refresh the page it populates
   useEffect(() => {
     if (!cart) {
-      createCartAndSetCookie();
+      createCartAndSetCookie().then();
     }
   }, [cart]);
 
-  // useEffect(() => {
-  //   if (
-  //     cart?.totalQuantity &&
-  //     cart?.totalQuantity !== quantityRef.current &&
-  //     cart?.totalQuantity > 0
-  //   ) {
-  //     if (!isOpen) {
-  //       setIsOpen(true);
-  //     }
-  //     quantityRef.current = cart?.totalQuantity;
-  //   }
-  // }, [isOpen, cart?.totalQuantity, quantityRef]);
+  // open side cart when item is added
+  useEffect(() => {
+    const currentQty = cart?.lineItems
+      ?.flatMap((i) => i.quantity)
+      .reduce((total, currentValue) => total + currentValue, 0);
+    if (currentQty && currentQty !== quantityRef.current && currentQty > 0) {
+      if (!isCartOpen) {
+        openCart();
+      }
+      quantityRef.current = currentQty;
+    }
+  }, [cart, quantityRef]);
 
   return (
     <div>
@@ -75,8 +76,8 @@ export default function SideCart() {
                           <Image
                             width={64}
                             height={64}
-                            alt={item.properties?.title || item.productName || ''}
-                            src={item.properties?.featuredImage || '/images/no-image.png'}
+                            alt={item?.properties?.title || item.productName || ''}
+                            src={item?.featuredImage || '/images/no-image.png'}
                           />
                         </Link>
                         <div>
