@@ -37,7 +37,7 @@ export async function removeItem(prevState: any, lineItemId: string): Promise<st
 
     if (lineItem && lineItem?.id) {
       try {
-        await removeFromCart(lineItemId);
+        await removeFromCart([lineItemId]);
         return 'Item removed from cart successfully';
       } catch (e) {
         console.error(e);
@@ -72,7 +72,7 @@ export async function updateItem(
     if (lineItem && lineItem.id) {
       if (quantity === 0) {
         try {
-          await removeFromCart(lineItemId);
+          await removeFromCart([lineItemId]);
           return 'Item updated successfully';
         } catch (e) {
           console.error(e);

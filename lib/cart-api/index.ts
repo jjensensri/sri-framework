@@ -34,6 +34,10 @@ export async function cartApiFetch<T>({
   if (method?.toLowerCase() === 'post') {
     requestOptions.body = JSON.stringify(payload);
   }
+  if (method?.toLowerCase() === 'delete') {
+    // @ts-ignore
+    delete requestOptions.headers['Content-Type'];
+  }
 
   try {
     const result = await fetch(`${apiHost}${endpoint}`, requestOptions);
@@ -202,67 +206,64 @@ export async function addToCart(skuId: string, quantity: number): Promise<Cart> 
   }
 }
 
-export async function removeFromCart(lineItemId: string): Promise<Cart> {
-  console.log('lineItemId: ', lineItemId);
-  return cart.cart;
-  // todo: zach
+export async function removeFromCart(lineItemIds: string[]): Promise<Cart> {
+  try {
+    const cookieStore = await cookies();
+    const cartId = cookieStore.get('cart-id')?.value;
+    let cartVersion = Number(cookieStore.get('cart-version')?.value) || 0;
 
-  // try {
-  //   const cookieStore = await cookies();
-  //   const cartId = cookieStore.get('cart-id')?.value;
-  //   let cartVersion = Number(cookieStore.get('cart-version')?.value);
-  //
-  //   if (!cartId) {
-  //     throw new Error('Cart ID is missing from cookies.');
-  //   }
-  //
-  //   if (!cartVersion || isNaN(cartVersion)) {
-  //     cartVersion = 1;
-  //   }
-  //
-  //   let latestCart: Cart | undefined;
-  //
-  //   for (const lineId of lineIds) {
-  //     const initialEndpoint = `/admin/carts/${channelKey}/carts/${cartId}/line-items/${lineId}?version=${cartVersion}`;
-  //     const request = {
-  //       endpoint: initialEndpoint,
-  //       method: 'DELETE',
-  //     };
-  //
-  //     const res = await cartApiFetch(request);
-  //
-  //     if (res.status === 404) {
-  //       // Retry with updated cart version
-  //       const retryResult = await retryWithNewCartVersion(
-  //         request,
-  //         cartVersion,
-  //         (newVersion) =>
-  //           `/admin/carts/${channelKey}/carts/${cartId}/line-items/${lineId}?version=${newVersion}`
-  //       );
-  //
-  //       cartVersion = retryResult.version;
-  //       latestCart = retryResult.cart;
-  //       continue;
-  //     }
-  //
-  //     if (res.status >= 400) {
-  //       throw new Error(`Remove from cart failed: ${JSON.stringify(res.body)}`);
-  //     }
-  //
-  //     latestCart = res.body as Cart;
-  //   }
-  //
-  //   if (!latestCart) {
-  //     throw new Error('No cart returned after removing items.');
-  //   }
-  //
-  //   return latestCart;
-  // } catch (err) {
-  //   console.error('Error removing from cart:', err);
-  //   throw new Error(
-  //     `Unable to remove from cart. Reason: ${err instanceof Error ? err.message : 'Unknown error'}`
-  //   );
-  // }
+    if (!cartId) {
+      throw new Error('Cart ID is missing from cookies.');
+    }
+
+    let latestCart: Cart | undefined;
+
+    for (const lineItemId of lineItemIds) {
+      const initialEndpoint = `/admin/carts/${channelKey}/carts/${cartId}/line-items/${lineItemId}?version=${cartVersion}`;
+      const request = {
+        endpoint: initialEndpoint,
+        method: 'DELETE',
+      };
+
+      const res = await cartApiFetch(request);
+
+      console.log('delete res: ', res);
+
+      if (res.status === 404) {
+        // Retry with updated cart version
+        const retryResult = await retryWithNewCartVersion(
+          request,
+          cartVersion,
+          (newVersion) =>
+            `/admin/carts/${channelKey}/carts/${cartId}/line-items/${lineItemId}?version=${newVersion}`
+        );
+
+        cartVersion = retryResult.version;
+        latestCart = retryResult;
+        continue;
+      }
+
+      if (res.status >= 400) {
+        throw new Error(`Remove from cart failed: ${JSON.stringify(res.body)}`);
+      }
+
+      latestCart = (res.body as CartResponse).cart;
+
+      // update cart version cookie
+      (await cookies()).set('cart-version', latestCart?.version?.toString());
+    }
+
+    if (!latestCart) {
+      throw new Error('No cart returned after removing items.');
+    }
+
+    return latestCart;
+  } catch (err) {
+    console.error('Error removing from cart:', err);
+    throw new Error(
+      `Unable to remove from cart. Reason: ${err instanceof Error ? err.message : 'Unknown error'}`
+    );
+  }
 }
 
 async function retryWithNewCartVersion(
