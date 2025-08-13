@@ -29,6 +29,8 @@ export function useCart() {
   // todo: merge in the properties from the product catalog necessary to render the cart & side cart.
   // todo: you can also pass in custom properties to the addToCart call so you don't have to call
   //       the product catalog. you would have to update the addToCart call to accept these properties
+
+  // TODO: JOSH -- need to merge the cart when it's returned in a cart response
   const cart = use(context.cartPromise);
   cart?.lineItems.map(async (item, i) => {
     const sku = item?.sku.toLowerCase();

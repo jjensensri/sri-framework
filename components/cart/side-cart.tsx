@@ -140,7 +140,7 @@ export default function SideCart() {
                   )}
                 </span>
               </div>
-              {cart.pricingSummary.totalDiscounts && (
+              {Boolean(cart.pricingSummary.totalDiscounts) && (
                 <div className={clsx(styles['cart-summary-item'], styles['discount'])}>
                   <span className={styles.label}>Discounts</span>
                   <span className={styles.amount}>
