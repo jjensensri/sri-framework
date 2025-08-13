@@ -4,6 +4,7 @@ import { Card, CardBody, CardText, CardTitle } from 'react-bootstrap';
 import { Product } from '@lib/catalog-api/types';
 import Image from 'next/image';
 import Link from 'next/link';
+import ProductTileAddToCart from '@components/layout/product-tile/product-tile-add-to-cart';
 
 export const ProductTile = ({ product, sizes }: { product: Product; sizes: string }) => {
   return (
@@ -26,6 +27,11 @@ export const ProductTile = ({ product, sizes }: { product: Product; sizes: strin
             />
           </CardTitle>
           <CardText>{product?.title}</CardText>
+
+          {/* todo: this is only for the default sku, need to add the rest */}
+          {product?.variants?.[0]?.id && (
+            <ProductTileAddToCart skuId={product.variants[0].id} quantity={1} />
+          )}
         </CardBody>
       </Card>
     </Link>

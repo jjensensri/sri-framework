@@ -2,34 +2,45 @@
 @import 'bootstrap/scss/mixins/breakpoints';
 
 .product-tile {
-  display: block;
-  text-decoration: none;
-  color: $black;
-  height: 100%;
-  padding-bottom: calc(var(--bs-gutter-x));
+	display: block;
+	text-decoration: none;
+	color: $black;
+	height: 100%;
+	padding-bottom: calc(var(--bs-gutter-x));
 
-  :global(.card) {
-    height: 100%;
-  }
-  :global(.card-title) {
-    margin-bottom: 4px;
+	&:hover {
+		opacity: 1;
 
-    p {
-      margin: 0;
-    }
-  }
-  :global(.card-body) {
-    margin-bottom: 4px;
-  }
+		:global(.card) {
+			box-shadow: $box-shadow-light;
+		}
+	}
+
+	:global(.card) {
+		height: 100%;
+		transition: box-shadow .1s ease-in-out;
+	}
+
+	:global(.card-title) {
+		margin-bottom: 4px;
+
+		p {
+			margin: 0;
+		}
+	}
+
+	:global(.card-body) {
+		margin-bottom: 4px;
+	}
 }
 
 .product-image {
-  aspect-ratio: 4/3 !important;
+	aspect-ratio: 4/3 !important;
 
-  img {
-    width: 100%;
-    height: auto !important;
-    border-top-left-radius: var(--bs-card-inner-border-radius);
-    border-top-right-radius: var(--bs-card-inner-border-radius);
-  }
+	img {
+		width: 100%;
+		height: auto !important;
+		border-top-left-radius: var(--bs-card-inner-border-radius);
+		border-top-right-radius: var(--bs-card-inner-border-radius);
+	}
 }
