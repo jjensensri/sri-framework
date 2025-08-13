@@ -102,12 +102,13 @@ export async function fetchAccessToken(): Promise<string> {
 }
 
 export async function getCart(): Promise<Cart | undefined> {
-  const cartId = (await cookies()).get('cart-id')?.value;
+  const cookieStore = await cookies();
+  const cartId = cookieStore.get('cart-id')?.value;
   if (!cartId) {
     return undefined;
   }
 
-  const res = await cartApiFetch({
+  const res = await cartApiFetch<CartResponse>({
     method: 'GET',
     endpoint: `/admin/carts/${channelKey}/carts/${cartId}`,
   });
@@ -116,11 +117,17 @@ export async function getCart(): Promise<Cart | undefined> {
     return undefined;
   }
 
-  return (res.body as CartResponse).cart;
+  const cart = (res.body as CartResponse).cart;
+
+  // todo: need to set cart-version cookie here, but react is throwing an error
+  // update cart version cookie
+  // cookieStore.set('cart-version', cart?.version?.toString());
+
+  return cart;
 }
 
 export async function createCart(): Promise<Cart> {
-  let res = await cartApiFetch({
+  let res = await cartApiFetch<Cart>({
     endpoint: `/admin/carts/${channelKey}/carts`,
     method: 'POST',
     payload: {
@@ -131,7 +138,7 @@ export async function createCart(): Promise<Cart> {
 
   if (res.status === 401) {
     // there was a stale access token, it should be refreshed so try again once
-    res = await cartApiFetch({
+    res = await cartApiFetch<Cart>({
       endpoint: `/admin/carts/${channelKey}/carts`,
       method: 'POST',
       payload: {
@@ -174,7 +181,7 @@ export async function addToCart(skuId: string, quantity: number): Promise<Cart> 
 
     // TODO: Cart ID changed for me, need to figure out how to refresh my token without having to re-login/create a new cart
     // if the cart ID changes, that's a problem.
-    const res = await cartApiFetch(addToCartRequest);
+    const res = await cartApiFetch<CartResponse>(addToCartRequest);
     if (res.status === 404) {
       // Add to cart failed to find, get the latest version to see if that was the reason
       return await retryWithNewCartVersion(
@@ -193,7 +200,7 @@ export async function addToCart(skuId: string, quantity: number): Promise<Cart> 
     const cart = (res.body as CartResponse).cart;
 
     // update cart version cookie
-    (await cookies()).set('cart-version', cart?.version?.toString());
+    cookieStore.set('cart-version', cart?.version?.toString());
 
     return cart;
   } catch (err) {
@@ -225,9 +232,7 @@ export async function removeFromCart(lineItemIds: string[]): Promise<Cart> {
         method: 'DELETE',
       };
 
-      const res = await cartApiFetch(request);
-
-      console.log('delete res: ', res);
+      const res = await cartApiFetch<CartResponse>(request);
 
       if (res.status === 404) {
         // Retry with updated cart version
@@ -250,7 +255,7 @@ export async function removeFromCart(lineItemIds: string[]): Promise<Cart> {
       latestCart = (res.body as CartResponse).cart;
 
       // update cart version cookie
-      (await cookies()).set('cart-version', latestCart?.version?.toString());
+      cookieStore.set('cart-version', latestCart?.version?.toString());
     }
 
     if (!latestCart) {
@@ -271,36 +276,70 @@ async function retryWithNewCartVersion(
   oldVersion: number,
   updateEndpointVersion: (version: number) => string
 ): Promise<Cart> {
-  console.log('request: ', request);
-  console.log('oldVersion: ', oldVersion);
-  console.log('updateEndpointVersion: ', updateEndpointVersion);
-  return cart.cart;
-  // todo: zach
+  const getCartResponse = await getCart();
 
-  // const getCartResponse = await getCart();
-  //
-  // if (!getCartResponse || getCartResponse.version === oldVersion) {
-  //   throw new Error(`Cart operation failed and cart version has not changed.`);
-  // }
-  //
-  // // Replace the endpoint using the new version via callback
-  // const updatedRequest = {
-  //   ...request,
-  //   endpoint: updateEndpointVersion(getCartResponse.version),
-  // };
-  //
-  // const secondRes = await cartApiFetch(updatedRequest);
-  //
-  // if (secondRes.status >= 400) {
-  //   throw new Error(`Retry failed: ${JSON.stringify(secondRes.body)}`);
-  // }
-  //
-  // return secondRes?.body?.cart as Cart;
+  if (!getCartResponse || getCartResponse.version === oldVersion) {
+    throw new Error(`Cart operation failed and cart version has not changed.`);
+  }
+
+  // Replace the endpoint using the new version via callback
+  const updatedRequest = {
+    ...request,
+    endpoint: updateEndpointVersion(getCartResponse.version),
+  };
+
+  const secondRes = await cartApiFetch<CartResponse>(updatedRequest);
+
+  if (secondRes.status >= 400) {
+    throw new Error(`Retry failed: ${JSON.stringify(secondRes.body)}`);
+  }
+
+  const cart = (secondRes.body as CartResponse).cart;
+
+  // update cart version cookie
+  (await cookies()).set('cart-version', cart?.version?.toString());
+
+  return cart;
 }
 
-export async function updateCart(lineItemId: string, quantity: number): Promise<Cart> {
-  console.log('lineItemId: ', lineItemId);
-  console.log('quantity: ', quantity);
-  return cart.cart;
-  // todo: zach
+export async function updateCart(lineItemId: string, quantity: number): Promise<Cart | undefined> {
+  try {
+    const cookieStore = await cookies();
+    const cartId = cookieStore.get('cart-id')?.value;
+    let cartVersion = Number(cookieStore.get('cart-version')?.value) || 0;
+
+    let updateQuantityRequest = {
+      endpoint: `/admin/carts/${channelKey}/carts/${cartId}/line-items/${lineItemId}?version=${cartVersion}`,
+      method: 'POST',
+      payload: {
+        quantity,
+      },
+    };
+
+    let res = await cartApiFetch<CartResponse>(updateQuantityRequest);
+
+    if (res.status === 404) {
+      // Update quantity failed to find, get the latest version to see
+      // if that was the reason
+      return await retryWithNewCartVersion(
+        updateQuantityRequest,
+        cartVersion,
+        (newVersion) =>
+          `/admin/carts/${channelKey}/carts/${cartId}/line-items/${lineItemId}?version=${newVersion}`
+      );
+    }
+    if (res.status >= 400) {
+      console.error(`Update Cart Quantity failed with status ${res.status}`, res.body);
+      throw new Error(`Update Cart Quantity failed: ${JSON.stringify(res.body)}`);
+    }
+
+    const cart = (res.body as CartResponse).cart;
+
+    // update cart version cookie
+    cookieStore.set('cart-version', cart?.version?.toString());
+
+    return cart;
+  } catch (e) {
+    console.error('You got errors with your code, fix it Josh', e);
+  }
 }
